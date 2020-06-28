@@ -1,40 +1,40 @@
-ï»¿/*********************************************************************
+/*********************************************************************
  *
  *            J1939 Main Source Code
  *
  *********************************************************************
  *
- *  æœ¬ç¨‹åºæ˜¯ç”±XieTongXueFlyMeå¯¹ç°æœ‰çš„J1939åè®®æ–‡æ¡£åˆ†æï¼Œå’Œå¯¹å‰è¾ˆçš„è´¡çŒ®æ€»ç»“,
- * å†™å‡ºçš„ä¸€å¥—å¼€æºçš„J1939é©±åŠ¨ã€‚
- *  æœ¬åè®®ç‰¹ç‚¹ï¼š
- *      1.æ˜“ç§»æ¤ï¼ˆä¸é’ˆå¯¹ç‰¹å®šçš„CANç¡¬ä»¶ï¼Œåªè¦æ»¡è¶³CAN2.0Bå³å¯ï¼‰
- *      2.è½»é‡çº§ï¼ˆå¯é€‚åº”ä½ç«¯çš„MCUï¼‰
- *      3.æ”¯æŒå¤šä»»åŠ¡è°ƒç”¨æ¥å£ï¼ˆå¯ç”¨äºåµŒå…¥å¼ç³»ç»Ÿï¼‰
- *      4.åŒæ¨¡å¼ï¼ˆè½®è¯¢æˆ–è€…ä¸­æ–­ï¼Œé€»è¾‘æ›´åŠ ç®€å•æ˜äº†ï¼‰
- *      5.ä¸æ‰å¸§ï¼ˆæ•°æ®é‡‡ç”¨æ”¶å‘åˆ—é˜Ÿç¼“å­˜ï¼‰
+ *  ±¾³ÌĞòÊÇÓÉXieTongXueFlyMe¶ÔÏÖÓĞµÄJ1939Ğ­ÒéÎÄµµ·ÖÎö£¬ºÍ¶ÔÇ°±²µÄ¹±Ï××Ü½á,
+ * Ğ´³öµÄÒ»Ì×¿ªÔ´µÄJ1939Çı¶¯¡£
+ *  ±¾Ğ­ÒéÌØµã£º
+ *      1.Ò×ÒÆÖ²£¨²»Õë¶ÔÌØ¶¨µÄCANÓ²¼ş£¬Ö»ÒªÂú×ãCAN2.0B¼´¿É£©
+ *      2.ÇáÁ¿¼¶£¨¿ÉÊÊÓ¦µÍ¶ËµÄMCU£©
+ *      3.Ö§³Ö¶àÈÎÎñµ÷ÓÃ½Ó¿Ú£¨¿ÉÓÃÓÚÇ¶ÈëÊ½ÏµÍ³£©
+ *      4.Ë«Ä£Ê½£¨ÂÖÑ¯»òÕßÖĞ¶Ï£¬Âß¼­¸ü¼Ó¼òµ¥Ã÷ÁË£©
+ *      5.²»µôÖ¡£¨Êı¾İ²ÉÓÃÊÕ·¢ÁĞ¶Ó»º´æ£©
  *
- *  æºä»£ç ä¸‹è½½ï¼š
+ *  Ô´´úÂëÏÂÔØ£º
  *      https://github.com/XeiTongXueFlyMe/J1939
- *  æºä»£ç ä¸´æ—¶æ‰‹å†ŒWebç«™ç‚¹ï¼š
+ *  Ô´´úÂëÁÙÊ±ÊÖ²áWebÕ¾µã£º
  *      https://xeitongxueflyme.github.io/j1939doc.github.io/
  *
  * Version     Date        Description
  * -------------------------------------------------------------------
- * v1.0.0     2017/06/04    é¦–ä¸ªç‰ˆæœ¬ Version 1 æµ‹è¯•ç‰ˆå‘å¸ƒ
- * v1.0.1     2017/08/04    å®Œå–„åŠŸèƒ½
- * v1.1.0     2017/11/22    Version 1 ç¨³å®šå‘å¸ƒç‰ˆ
- * v2.0.1     2017/11/24    Version 2 æµ‹è¯•ç‰ˆå‘å¸ƒ
- * v2.0.2     2018/01/03    è§£å†³V2.0.1 é—ç•™é—®é¢˜
- * v2.1.0     2018/01/20    Version 2 ç¨³å®šå‘å¸ƒç‰ˆ
+ * v1.0.0     2017/06/04    Ê×¸ö°æ±¾ Version 1 ²âÊÔ°æ·¢²¼
+ * v1.0.1     2017/08/04    ÍêÉÆ¹¦ÄÜ
+ * v1.1.0     2017/11/22    Version 1 ÎÈ¶¨·¢²¼°æ
+ * v2.0.1     2017/11/24    Version 2 ²âÊÔ°æ·¢²¼
+ * v2.0.2     2018/01/03    ½â¾öV2.0.1 ÒÅÁôÎÊÌâ
+ * v2.1.0     2018/01/20    Version 2 ÎÈ¶¨·¢²¼°æ
  * Author               Date         changes
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *XeiTongXueFlyMe       7/06/04      é¦–ä¸ªç‰ˆæœ¬
- *XeiTongXueFlyMe       7/08/04      å¢åŠ å¯¹TPçš„æ”¯æŒ
- *XeiTongXueFlyMe       7/11/24      å¢åŠ å¯¹å¤šè·¯CANç¡¬ä»¶çš„æ”¶å‘ï¼Œå’ŒæŠ¥æ–‡å¤„ç†
- *XeiTongXueFlyMe       7/11/29      å¢åŠ è¯·æ±‚å’Œå“åº”API
- *XeiTongXueFlyMe       7/12/07      é‡åšTPæ¥å—APIå‡½æ•°
- *XeiTongXueFlyMe       7/12/08      å¢åŠ è½¯ä»¶æ»¤æ³¢å™¨
- *XeiTongXueFlyMe       8/01/03      é‡åšæ¥å—å‘é€APIï¼Œç®€åŒ–åè®®æ ˆåˆå§‹åŒ–è°ƒç”¨é€»è¾‘
+ *XeiTongXueFlyMe       7/06/04      Ê×¸ö°æ±¾
+ *XeiTongXueFlyMe       7/08/04      Ôö¼Ó¶ÔTPµÄÖ§³Ö
+ *XeiTongXueFlyMe       7/11/24      Ôö¼Ó¶Ô¶àÂ·CANÓ²¼şµÄÊÕ·¢£¬ºÍ±¨ÎÄ´¦Àí
+ *XeiTongXueFlyMe       7/11/29      Ôö¼ÓÇëÇóºÍÏìÓ¦API
+ *XeiTongXueFlyMe       7/12/07      ÖØ×öTP½ÓÊÜAPIº¯Êı
+ *XeiTongXueFlyMe       7/12/08      Ôö¼ÓÈí¼şÂË²¨Æ÷
+ *XeiTongXueFlyMe       8/01/03      ÖØ×ö½ÓÊÜ·¢ËÍAPI£¬¼ò»¯Ğ­ÒéÕ»³õÊ¼»¯µ÷ÓÃÂß¼­
  **********************************************************************/
 #ifndef __J1939_SOURCE
 #define __J1939_SOURCE
@@ -44,16 +44,16 @@
 
 #include "J1939_config.H"
 
-#define J1939_TRUE       1 /**< ä»£è¡¨å‡½æ•°æ­£ç¡®è¿”å›*/
-#define J1939_FALSE      0 /**< ä»£è¡¨å‡½æ•°é”™è¯¯è¿”å›*/
-#define ADDRESS_CLAIM_TX 1 /**< è¿›å…¥åœ°å€ç«äº‰å‘é€å¤„ç†æ¨¡å¼*/
-#define ADDRESS_CLAIM_RX 2 /**< è¿›å…¥åœ°å€ç«äº‰æ¥å—å¤„ç†æ¨¡å¼*/
+#define J1939_TRUE       1 /**< ´ú±íº¯ÊıÕıÈ··µ»Ø*/
+#define J1939_FALSE      0 /**< ´ú±íº¯Êı´íÎó·µ»Ø*/
+#define ADDRESS_CLAIM_TX 1 /**< ½øÈëµØÖ·¾ºÕù·¢ËÍ´¦ÀíÄ£Ê½*/
+#define ADDRESS_CLAIM_RX 2 /**< ½øÈëµØÖ·¾ºÕù½ÓÊÜ´¦ÀíÄ£Ê½*/
 
-//å…¨å±€å˜é‡ã€‚
-/** è®¾å¤‡çš„æ ‡ç§°ç¬¦
+//È«¾Ö±äÁ¿¡£
+/** Éè±¸µÄ±ê³Æ·û
  *
- *  æˆ‘ä»¬éœ€è¦åœ¨"J1939_config.H"ä¸­é…ç½®
- *  @note åœ¨åˆå§‹åŒ–ä¸­èµ‹å€¼ï¼Œèµ‹å€¼å‚è€ƒå‚è€ƒ1939-81æ–‡æ¡£
+ *  ÎÒÃÇĞèÒªÔÚ"J1939_config.H"ÖĞÅäÖÃ
+ *  @note ÔÚ³õÊ¼»¯ÖĞ¸³Öµ£¬¸³Öµ²Î¿¼²Î¿¼1939-81ÎÄµµ
  */
 j1939_uint8_t CA_Name[J1939_DATA_LENGTH];
 j1939_uint8_t CommandedAddress;
@@ -62,47 +62,47 @@ j1939_uint8_t J1939_Address;
 J1939_FLAG    J1939_Flags;
 J1939_MESSAGE OneMessage;
 CAN_NODE      Can_Node;
-//èŠ‚ç‚¹åœ°å€
+//½ÚµãµØÖ·
 j1939_uint8_t NodeAddress_1;
 j1939_uint8_t NodeAddress_2;
 j1939_uint8_t NodeAddress_3;
 j1939_uint8_t NodeAddress_4;
-//æ¥å—åˆ—é˜Ÿå…¨å±€å˜é‡(CAN_NODE_1)
+//½ÓÊÜÁĞ¶ÓÈ«¾Ö±äÁ¿(CAN_NODE_1)
 j1939_uint8_t RXHead_1;
 j1939_uint8_t RXTail_1;
 j1939_uint8_t RXQueueCount_1;
 J1939_MESSAGE RXQueue_1[J1939_RX_QUEUE_SIZE];
-//å‘é€åˆ—é˜Ÿå…¨å±€å˜é‡ (CAN_NODE_1)
+//·¢ËÍÁĞ¶ÓÈ«¾Ö±äÁ¿ (CAN_NODE_1)
 j1939_uint8_t TXHead_1;
 j1939_uint8_t TXTail_1;
 j1939_uint8_t TXQueueCount_1;
 J1939_MESSAGE TXQueue_1[J1939_TX_QUEUE_SIZE];
-//æ¥å—åˆ—é˜Ÿå…¨å±€å˜é‡(CAN_NODE_2)
+//½ÓÊÜÁĞ¶ÓÈ«¾Ö±äÁ¿(CAN_NODE_2)
 j1939_uint8_t RXHead_2;
 j1939_uint8_t RXTail_2;
 j1939_uint8_t RXQueueCount_2;
 J1939_MESSAGE RXQueue_2[J1939_RX_QUEUE_SIZE];
-//å‘é€åˆ—é˜Ÿå…¨å±€å˜é‡ (CAN_NODE_2)
+//·¢ËÍÁĞ¶ÓÈ«¾Ö±äÁ¿ (CAN_NODE_2)
 j1939_uint8_t TXHead_2;
 j1939_uint8_t TXTail_2;
 j1939_uint8_t TXQueueCount_2;
 J1939_MESSAGE TXQueue_2[J1939_TX_QUEUE_SIZE];
-//æ¥å—åˆ—é˜Ÿå…¨å±€å˜é‡(CAN_NODE_3)
+//½ÓÊÜÁĞ¶ÓÈ«¾Ö±äÁ¿(CAN_NODE_3)
 j1939_uint8_t RXHead_3;
 j1939_uint8_t RXTail_3;
 j1939_uint8_t RXQueueCount_3;
 J1939_MESSAGE RXQueue_3[J1939_RX_QUEUE_SIZE];
-//å‘é€åˆ—é˜Ÿå…¨å±€å˜é‡ (CAN_NODE_3)
+//·¢ËÍÁĞ¶ÓÈ«¾Ö±äÁ¿ (CAN_NODE_3)
 j1939_uint8_t TXHead_3;
 j1939_uint8_t TXTail_3;
 j1939_uint8_t TXQueueCount_3;
 J1939_MESSAGE TXQueue_3[J1939_TX_QUEUE_SIZE];
-//æ¥å—åˆ—é˜Ÿå…¨å±€å˜é‡(CAN_NODE_4)
+//½ÓÊÜÁĞ¶ÓÈ«¾Ö±äÁ¿(CAN_NODE_4)
 j1939_uint8_t RXHead_4;
 j1939_uint8_t RXTail_4;
 j1939_uint8_t RXQueueCount_4;
 J1939_MESSAGE RXQueue_4[J1939_RX_QUEUE_SIZE];
-//å‘é€åˆ—é˜Ÿå…¨å±€å˜é‡ (CAN_NODE_4)
+//·¢ËÍÁĞ¶ÓÈ«¾Ö±äÁ¿ (CAN_NODE_4)
 j1939_uint8_t TXHead_4;
 j1939_uint8_t TXTail_4;
 j1939_uint8_t TXQueueCount_4;
@@ -111,7 +111,7 @@ J1939_MESSAGE TXQueue_4[J1939_TX_QUEUE_SIZE];
 struct Request_List REQUEST_LIST;
 
 #if J1939_TP_RX_TX
-//TPåè®®å…¨å±€å˜é‡
+//TPĞ­ÒéÈ«¾Ö±äÁ¿
 J1939_TP_Flags          J1939_TP_Flags_t;
 J1939_TRANSPORT_RX_INFO TP_RX_MSG;
 J1939_TRANSPORT_TX_INFO TP_TX_MSG;
@@ -121,11 +121,11 @@ static void          J1939_ReceiveMessages(void);
 static j1939_uint8_t J1939_TransmitMessages(void);
 
 /**
-* @note  ç¡¬ä»¶æ»¤æ³¢å™¨2 æˆ– è½¯ä»¶æ»¤æ³¢å™¨  æ»¤æ³¢é…ç½®ï¼ˆè®¾ç½®PSæ®µï¼‰\n
+* @note  Ó²¼şÂË²¨Æ÷2 »ò Èí¼şÂË²¨Æ÷  ÂË²¨ÅäÖÃ£¨ÉèÖÃPS¶Î£©\n
 */
 void SetAddressFilter(j1939_uint8_t Address)
 {
-    /*è½¯ä»¶æ»¤æ³¢*/
+    /*Èí¼şÂË²¨*/
 #if J1939SoftwareFilterEn == J1939_TRUE
     switch (Can_Node)
     {
@@ -155,39 +155,39 @@ void SetAddressFilter(j1939_uint8_t Address)
         }
     }
 #endif //J1939SoftwareFilterEn
-    /*ç¡¬ä»¶æ»¤æ³¢*/
+    /*Ó²¼şÂË²¨*/
     Port_SetAddressFilter(Address);
 }
 
 /**
 * @param[in]  J1939_MESSAGE *
-* @note å‘é€*MsgPtrçš„ä¿¡æ¯ï¼Œæ‰€æœ‰çš„æ•°æ®å­—æ®µï¼ˆæ¯”å¦‚æ•°æ®é•¿åº¦ã€ä¼˜å…ˆçº§ã€å’Œæºåœ°å€ï¼‰å¿…é¡»å·²ç»è®¾ç½®ã€‚\n
+* @note ·¢ËÍ*MsgPtrµÄĞÅÏ¢£¬ËùÓĞµÄÊı¾İ×Ö¶Î£¨±ÈÈçÊı¾İ³¤¶È¡¢ÓÅÏÈ¼¶¡¢ºÍÔ´µØÖ·£©±ØĞëÒÑ¾­ÉèÖÃ¡£\n
 */
 void SendOneMessage(J1939_MESSAGE *MsgPtr)
 {
-    //è®¾ç½®æ¶ˆæ¯çš„æœ€åéƒ¨åˆ†,ç¡®ä¿DataLengthè§„èŒƒã€‚ï¼ˆå‚è€ƒCAN B2.0ï¼‰
-    MsgPtr->Mxe.Res = 0; //å‚è€ƒJ1939çš„æ•°æ®é“¾è·¯å±‚ï¼ˆSAE J1939-21ï¼‰
+    //ÉèÖÃÏûÏ¢µÄ×îºó²¿·Ö,È·±£DataLength¹æ·¶¡££¨²Î¿¼CAN B2.0£©
+    MsgPtr->Mxe.Res = 0; //²Î¿¼J1939µÄÊı¾İÁ´Â·²ã£¨SAE J1939-21£©
     MsgPtr->Mxe.RTR = 0;
     if (MsgPtr->Mxe.DataLength > 8)
     {
         MsgPtr->Mxe.DataLength = 8;
     }
-    //å‘é€ä¸€å¸§æ¶ˆæ¯ï¼Œå°† J1939_MESSAGE ä¸­çš„æ‰€æœ‰æ¶ˆæ¯åŠ è½½é“canæ¨¡å—è‡ªæœ‰çš„ç»“æ„ä¸­
+    //·¢ËÍÒ»Ö¡ÏûÏ¢£¬½« J1939_MESSAGE ÖĞµÄËùÓĞÏûÏ¢¼ÓÔØµÀcanÄ£¿é×ÔÓĞµÄ½á¹¹ÖĞ
     Port_CAN_Transmit(MsgPtr);
 }
 
 /**
-* @param[in]  MsgPtr             ç”¨æˆ·è¦å‡ºé˜Ÿçš„æ¶ˆæ¯
-* @param[in]  _Can_Node          è¦å‡ºé˜Ÿçš„CANç¡¬ä»¶ç¼–å·
-* @return    RC_SUCCESS          æ¶ˆæ¯å‡ºé˜ŸæˆåŠŸ
-* @return    RC_QUEUEEMPTY       æ²¡æœ‰æ¶ˆæ¯è¿”å›
-* @note      ä»æ¥å—é˜Ÿåˆ—ä¸­è¯»å–ä¸€ä¸ªä¿¡æ¯åˆ°*MsgPtrã€‚å¦‚æœæˆ‘ä»¬ç”¨çš„æ˜¯ä¸­æ–­ï¼Œéœ€è¦å°†ä¸­æ–­å¤±èƒ½ï¼Œåœ¨è·å–æ¥å—é˜Ÿåˆ—æ•°æ®æ—¶
+* @param[in]  MsgPtr             ÓÃ»§Òª³ö¶ÓµÄÏûÏ¢
+* @param[in]  _Can_Node          Òª³ö¶ÓµÄCANÓ²¼ş±àºÅ
+* @return    RC_SUCCESS          ÏûÏ¢³ö¶Ó³É¹¦
+* @return    RC_QUEUEEMPTY       Ã»ÓĞÏûÏ¢·µ»Ø
+* @note      ´Ó½ÓÊÜ¶ÓÁĞÖĞ¶ÁÈ¡Ò»¸öĞÅÏ¢µ½*MsgPtr¡£Èç¹ûÎÒÃÇÓÃµÄÊÇÖĞ¶Ï£¬ĞèÒª½«ÖĞ¶ÏÊ§ÄÜ£¬ÔÚ»ñÈ¡½ÓÊÜ¶ÓÁĞÊı¾İÊ±
 */
 j1939_uint8_t J1939_DequeueMessage(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
 {
     j1939_uint8_t _rc = RC_SUCCESS;
 
-//***************************å…³æ¥å—ä¸­æ–­********************************
+//***************************¹Ø½ÓÊÜÖĞ¶Ï********************************
 #if J1939_POLL_ECAN == J1939_FALSE
     Port_RXinterruptDisable();
 #endif
@@ -271,7 +271,7 @@ j1939_uint8_t J1939_DequeueMessage(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
             break;
         }
     }
-        //***************************å¼€æ¥å—ä¸­æ–­********************************
+        //***************************¿ª½ÓÊÜÖĞ¶Ï********************************
 #if J1939_POLL_ECAN == J1939_FALSE
     Port_RXinterruptEnable();
 #endif
@@ -279,25 +279,25 @@ j1939_uint8_t J1939_DequeueMessage(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
     return _rc;
 }
 /**
-* @param[in] MsgPtr              å­˜å‚¨è¯»å–æ¶ˆæ¯çš„ç¼“å­˜
-* @param[in] _Can_Node           è¯»å–æ¶ˆæ¯çš„CANç¡¬ä»¶ç¼–å·ï¼ˆä»å“ªä¸€è·¯CANè¯»å–æ•°æ®ï¼‰
-* @return    RC_SUCCESS          è¯»å–æ¶ˆæ¯æˆåŠŸï¼Œ
-* @return    RC_QUEUEEMPTY       è¯»å–æ¶ˆæ¯ä¸æˆåŠŸï¼Œæ²¡æœ‰æ¶ˆæ¯ã€‚
-* @note      ä»æ¥å—é˜Ÿåˆ—ä¸­è¯»å–ä¸€ä¸ªä¿¡æ¯åˆ°*MsgPtrã€‚
+* @param[in] MsgPtr              ´æ´¢¶ÁÈ¡ÏûÏ¢µÄ»º´æ
+* @param[in] _Can_Node           ¶ÁÈ¡ÏûÏ¢µÄCANÓ²¼ş±àºÅ£¨´ÓÄÄÒ»Â·CAN¶ÁÈ¡Êı¾İ£©
+* @return    RC_SUCCESS          ¶ÁÈ¡ÏûÏ¢³É¹¦£¬
+* @return    RC_QUEUEEMPTY       ¶ÁÈ¡ÏûÏ¢²»³É¹¦£¬Ã»ÓĞÏûÏ¢¡£
+* @note      ´Ó½ÓÊÜ¶ÓÁĞÖĞ¶ÁÈ¡Ò»¸öĞÅÏ¢µ½*MsgPtr¡£
 */
 j1939_uint8_t J1939_Read_Message(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
 {
     return J1939_DequeueMessage(MsgPtr, _Can_Node);
 }
 /**
-* @param[in]  MsgPtr     ç”¨æˆ·è¦å…¥é˜Ÿçš„æ¶ˆæ¯
-* @param[in]  _Can_Node  è¦å…¥é˜Ÿçš„CANç¡¬ä»¶ç¼–å·ï¼ˆè¦é€‰æ‹©çš„ä½¿ç”¨çš„CANç¡¬ä»¶ç¼–å·ï¼‰
-* @return     RC_SUCCESS          æ¶ˆæ¯å…¥é˜ŸæˆåŠŸ
-* @return     RC_QUEUEFULL        å‘é€åˆ—é˜Ÿæ»¡ï¼Œæ¶ˆæ¯å…¥é˜Ÿå¤±è´¥
-* @return     RC_CANNOTTRANSMIT   ç³»ç»Ÿç›®å‰ä¸èƒ½å‘é€æ¶ˆæ¯
-* @note     è¿™æ®µç¨‹åºï¼Œå°†*MsgPtræ”¾å…¥å‘é€æ¶ˆæ¯åˆ—é˜Ÿä¸­\n
-            å¦‚æœä¿¡æ¯ä¸èƒ½å…¥é˜Ÿæˆ–è€…å‘é€ï¼Œå°†æœ‰ä¸€ä¸ªç›¸åº”çš„è¿”å›æç¤ºï¼Œ\n
-            å¦‚æœå‘é€ä¸­æ–­è¢«è®¾ç½®ï¼ˆå¯ç”¨ï¼‰ï¼Œå½“æ¶ˆæ¯åˆ—é˜Ÿåï¼Œå‘é€ä¸­æ–­è¢«ä½¿èƒ½
+* @param[in]  MsgPtr     ÓÃ»§ÒªÈë¶ÓµÄÏûÏ¢
+* @param[in]  _Can_Node  ÒªÈë¶ÓµÄCANÓ²¼ş±àºÅ£¨ÒªÑ¡ÔñµÄÊ¹ÓÃµÄCANÓ²¼ş±àºÅ£©
+* @return     RC_SUCCESS          ÏûÏ¢Èë¶Ó³É¹¦
+* @return     RC_QUEUEFULL        ·¢ËÍÁĞ¶ÓÂú£¬ÏûÏ¢Èë¶ÓÊ§°Ü
+* @return     RC_CANNOTTRANSMIT   ÏµÍ³Ä¿Ç°²»ÄÜ·¢ËÍÏûÏ¢
+* @note     Õâ¶Î³ÌĞò£¬½«*MsgPtr·ÅÈë·¢ËÍÏûÏ¢ÁĞ¶ÓÖĞ\n
+            Èç¹ûĞÅÏ¢²»ÄÜÈë¶Ó»òÕß·¢ËÍ£¬½«ÓĞÒ»¸öÏàÓ¦µÄ·µ»ØÌáÊ¾£¬\n
+            Èç¹û·¢ËÍÖĞ¶Ï±»ÉèÖÃ£¨¿ÉÓÃ£©£¬µ±ÏûÏ¢ÁĞ¶Óºó£¬·¢ËÍÖĞ¶Ï±»Ê¹ÄÜ
 */
 j1939_uint8_t J1939_EnqueueMessage(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
 {
@@ -330,7 +330,7 @@ j1939_uint8_t J1939_EnqueueMessage(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
                     }
                     else
                     {
-                        J1939_Flags.TransmitMessagesdCover = 1; //å‘é€æ•°æ®è¢«è¦†ç›–ï¼Œä¸Šä¸€å¸§æ•°æ®è¢«è¦†ç›–
+                        J1939_Flags.TransmitMessagesdCover = 1; //·¢ËÍÊı¾İ±»¸²¸Ç£¬ÉÏÒ»Ö¡Êı¾İ±»¸²¸Ç
                     }
                     TXQueue_1[TXTail_1] = *MsgPtr;
                 }
@@ -355,7 +355,7 @@ j1939_uint8_t J1939_EnqueueMessage(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
                     }
                     else
                     {
-                        J1939_Flags.TransmitMessagesdCover = 1; //å‘é€æ•°æ®è¢«è¦†ç›–ï¼Œä¸Šä¸€å¸§æ•°æ®è¢«è¦†ç›–
+                        J1939_Flags.TransmitMessagesdCover = 1; //·¢ËÍÊı¾İ±»¸²¸Ç£¬ÉÏÒ»Ö¡Êı¾İ±»¸²¸Ç
                     }
                     TXQueue_2[TXTail_2] = *MsgPtr;
                 }
@@ -380,7 +380,7 @@ j1939_uint8_t J1939_EnqueueMessage(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
                     }
                     else
                     {
-                        J1939_Flags.TransmitMessagesdCover = 1; //å‘é€æ•°æ®è¢«è¦†ç›–ï¼Œä¸Šä¸€å¸§æ•°æ®è¢«è¦†ç›–
+                        J1939_Flags.TransmitMessagesdCover = 1; //·¢ËÍÊı¾İ±»¸²¸Ç£¬ÉÏÒ»Ö¡Êı¾İ±»¸²¸Ç
                     }
                     TXQueue_3[TXTail_3] = *MsgPtr;
                 }
@@ -405,7 +405,7 @@ j1939_uint8_t J1939_EnqueueMessage(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
                     }
                     else
                     {
-                        J1939_Flags.TransmitMessagesdCover = 1; //å‘é€æ•°æ®è¢«è¦†ç›–ï¼Œä¸Šä¸€å¸§æ•°æ®è¢«è¦†ç›–
+                        J1939_Flags.TransmitMessagesdCover = 1; //·¢ËÍÊı¾İ±»¸²¸Ç£¬ÉÏÒ»Ö¡Êı¾İ±»¸²¸Ç
                     }
                     TXQueue_4[TXTail_4] = *MsgPtr;
                 }
@@ -424,18 +424,18 @@ j1939_uint8_t J1939_EnqueueMessage(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
 
 #if J1939_POLL_ECAN == J1939_FALSE
     Port_TXinterruptEnable();
-    //è§¦å‘å‘é€ä¸­æ–­
+    //´¥·¢·¢ËÍÖĞ¶Ï
     Port_TXinterruptOk();
 #endif
     return _rc;
 }
 /**
-* @param[in]  MsgPtr              å­˜å‚¨å‘é€æ¶ˆæ¯çš„ç¼“å­˜
-* @param[in]  _Can_Node           å‘é€æ¶ˆæ¯çš„CANç¡¬ä»¶ç¼–å·ï¼ˆä»å“ªä¸€è·¯CANå‘é€æ•°æ®ï¼‰
-* @return     RC_SUCCESS          å‘é€æ¶ˆæ¯æˆåŠŸ
-* @return     RC_QUEUEFULL        å‘é€æ¶ˆæ¯ä¸æˆåŠŸï¼Œå‘é€åˆ—é˜Ÿæ»¡ï¼Œæ¶ˆæ¯å…¥é˜Ÿå¤±è´¥
-* @return     RC_CANNOTTRANSMIT   å‘é€æ¶ˆæ¯ä¸æˆåŠŸï¼Œç³»ç»Ÿç›®å‰ä¸èƒ½å‘é€æ¶ˆæ¯
-* @note       å¦‚æœä¿¡æ¯ä¸èƒ½å…¥é˜Ÿæˆ–è€…å‘é€ï¼Œå°†æœ‰ä¸€ä¸ªç›¸åº”çš„è¿”å›æç¤ºï¼Œ\n
+* @param[in]  MsgPtr              ´æ´¢·¢ËÍÏûÏ¢µÄ»º´æ
+* @param[in]  _Can_Node           ·¢ËÍÏûÏ¢µÄCANÓ²¼ş±àºÅ£¨´ÓÄÄÒ»Â·CAN·¢ËÍÊı¾İ£©
+* @return     RC_SUCCESS          ·¢ËÍÏûÏ¢³É¹¦
+* @return     RC_QUEUEFULL        ·¢ËÍÏûÏ¢²»³É¹¦£¬·¢ËÍÁĞ¶ÓÂú£¬ÏûÏ¢Èë¶ÓÊ§°Ü
+* @return     RC_CANNOTTRANSMIT   ·¢ËÍÏûÏ¢²»³É¹¦£¬ÏµÍ³Ä¿Ç°²»ÄÜ·¢ËÍÏûÏ¢
+* @note       Èç¹ûĞÅÏ¢²»ÄÜÈë¶Ó»òÕß·¢ËÍ£¬½«ÓĞÒ»¸öÏàÓ¦µÄ·µ»ØÌáÊ¾£¬\n
 */
 j1939_uint8_t J1939_Send_Message(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
 {
@@ -443,15 +443,15 @@ j1939_uint8_t J1939_Send_Message(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node)
 }
 /**
 *
-* @note è¿™æ®µä»£ç åœ¨ç³»ç»Ÿåˆå§‹åŒ–ä¸­è¢«è°ƒç”¨,ï¼ˆæ”¾åœ¨CANè®¾å¤‡åˆå§‹åŒ–ä¹‹åï¼‰\n
-        åˆå§‹åŒ–J1939å…¨å±€å˜é‡\n
+* @note Õâ¶Î´úÂëÔÚÏµÍ³³õÊ¼»¯ÖĞ±»µ÷ÓÃ,£¨·ÅÔÚCANÉè±¸³õÊ¼»¯Ö®ºó£©\n
+        ³õÊ¼»¯J1939È«¾Ö±äÁ¿\n
 */
 void J1939_Initialization()
 {
-    /*åˆå§‹åŒ–å…¨å±€å˜é‡*/
-    J1939_Flags.FlagVal = 0; //æ²¡æœ‰å£°æ˜åœ°å€ï¼Œå…¶ä»–çš„æ ‡è¯†ä½å°†è¢«è®¾ç½®ä¸º0ï¼ˆå¤ä½ï¼‰
+    /*³õÊ¼»¯È«¾Ö±äÁ¿*/
+    J1939_Flags.FlagVal = 0; //Ã»ÓĞÉùÃ÷µØÖ·£¬ÆäËûµÄ±êÊ¶Î»½«±»ÉèÖÃÎª0£¨¸´Î»£©
 
-    /*åˆå§‹åŒ–æ¥å—å’Œå‘é€åˆ—é˜Ÿ*/
+    /*³õÊ¼»¯½ÓÊÜºÍ·¢ËÍÁĞ¶Ó*/
     TXHead_1       = 0;
     TXHead_2       = 0;
     TXHead_3       = 0;
@@ -476,21 +476,21 @@ void J1939_Initialization()
     RXQueueCount_2 = 0;
     RXQueueCount_3 = 0;
     RXQueueCount_4 = 0;
-    /*åˆå§‹åŒ–èŠ‚ç‚¹åœ°å€*/
+    /*³õÊ¼»¯½ÚµãµØÖ·*/
     NodeAddress_1 = J1939_STARTING_ADDRESS_1;
     NodeAddress_2 = J1939_STARTING_ADDRESS_2;
     NodeAddress_3 = J1939_STARTING_ADDRESS_3;
     NodeAddress_4 = J1939_STARTING_ADDRESS_4;
-    /*åˆå§‹åŒ–CANèŠ‚ç‚¹çš„é€‰æ‹©*/
+    /*³õÊ¼»¯CAN½ÚµãµÄÑ¡Ôñ*/
     Can_Node = Select_CAN_NODE_1;
-    /*åˆå§‹åŒ–è¯·æ±‚é“¾è¡¨*/
+    /*³õÊ¼»¯ÇëÇóÁ´±í*/
     REQUEST_LIST.PGN      = 0;
     REQUEST_LIST.data     = J1939_NULL;
     REQUEST_LIST.update   = J1939_NULL;
     REQUEST_LIST.lenght   = 0;
     REQUEST_LIST.Can_Node = Select_CAN_NODE_Null;
     REQUEST_LIST.next     = J1939_NULL;
-    /*å°†TPåè®®ç½®ä¸ºç©ºé—²*/
+    /*½«TPĞ­ÒéÖÃÎª¿ÕÏĞ*/
 #if J1939_TP_RX_TX
     J1939_TP_Flags_t.state          = J1939_TP_NULL;
     J1939_TP_Flags_t.TP_RX_CAN_NODE = Select_CAN_NODE_Null;
@@ -510,45 +510,45 @@ void J1939_Initialization()
 }
 
 /**
-* @note è¿™ä¸ªå‡½æ•°è¢«è°ƒç”¨ï¼Œå½“è®¾å¤‡äº§ç”ŸCANä¸­æ–­ï¼ˆå¯èƒ½æ˜¯æ¥å—ä¸­æ–­ï¼Œä¹Ÿå¯èƒ½æ˜¯å‘é€ä¸­æ–­ï¼‰\n
-        é¦–å…ˆæˆ‘ä»¬è¦æ¸…é™¤ä¸­æ–­æ ‡è¯†ä½\n
-        ç„¶åè°ƒç”¨æ¥å—æˆ–è€…å‘é€å‡½æ•°ã€‚
+* @note Õâ¸öº¯Êı±»µ÷ÓÃ£¬µ±Éè±¸²úÉúCANÖĞ¶Ï£¨¿ÉÄÜÊÇ½ÓÊÜÖĞ¶Ï£¬Ò²¿ÉÄÜÊÇ·¢ËÍÖĞ¶Ï£©\n
+        Ê×ÏÈÎÒÃÇÒªÇå³ıÖĞ¶Ï±êÊ¶Î»\n
+        È»ºóµ÷ÓÃ½ÓÊÜ»òÕß·¢ËÍº¯Êı¡£
 */
 #if J1939_POLL_ECAN == J1939_FALSE
 void J1939_ISR(void)
 {
-    //åˆ¤æ–­ç›¸å…³æ ‡è¯†ä½,æ˜¯æ¥å—è¿˜æ˜¯å‘é€
-    //æ¸…é™¤æ ‡è¯†ä½
+    //ÅĞ¶ÏÏà¹Ø±êÊ¶Î»,ÊÇ½ÓÊÜ»¹ÊÇ·¢ËÍ
+    //Çå³ı±êÊ¶Î»
     Port_CAN_identifier_clc();
-    //è°ƒç”¨ç›¸å…³çš„å¤„ç†å‡½æ•°
+    //µ÷ÓÃÏà¹ØµÄ´¦Àíº¯Êı
     J1939_ReceiveMessages();
     J1939_TransmitMessages();
 #if J1939_TP_RX_TX
     J1939_TP_Poll();
 #endif //J1939_TP_RX_TX
-    //å¯èƒ½å­˜åœ¨å› ä¸ºé”™è¯¯äº§ç”Ÿä¸­æ–­ï¼Œç›´æ¥æ¸…é™¤ç›¸å…³çš„æ ‡è¯†ä½
+    //¿ÉÄÜ´æÔÚÒòÎª´íÎó²úÉúÖĞ¶Ï£¬Ö±½ÓÇå³ıÏà¹ØµÄ±êÊ¶Î»
 }
 #endif
 
 /**
-* @param[in]  ElapsedTime   ä¸€ä¸ªå¤§æ¦‚çš„æ¯«ç§’æ•°ï¼Œé€šå¸¸è®¾ç½® 5 æˆ– 3
-* @note å¦‚æœæˆ‘ä»¬é‡‡ç”¨è½®è¯¢çš„æ–¹å¼è·å–ä¿¡æ¯ï¼Œè¿™ä¸ªå‡½æ•°æ¯å‡ ä¸ªæ¯«ç§’å°†è¢«è°ƒç”¨ä¸€æ¬¡ã€‚\n
-        ä¸æ–­çš„æ¥å—æ¶ˆæ¯å’Œå‘é€æ¶ˆæ¯ä»æ¶ˆæ¯é˜Ÿåˆ—ä¸­\n
-        æ­¤å¤–ï¼Œå¦‚æœæˆ‘ä»¬æ­£åœ¨ç­‰å¾…ä¸€ä¸ªåœ°å€ç«äº‰ååº”ã€‚\n
-        å¦‚æœè¶…æ—¶ï¼Œæˆ‘ä»¬åªæ¥æ”¶ç‰¹å®šçš„æ¶ˆæ¯ï¼ˆç›®æ ‡åœ°å€ = J1939_Addressï¼‰\n
+* @param[in]  ElapsedTime   Ò»¸ö´ó¸ÅµÄºÁÃëÊı£¬Í¨³£ÉèÖÃ 5 »ò 3
+* @note Èç¹ûÎÒÃÇ²ÉÓÃÂÖÑ¯µÄ·½Ê½»ñÈ¡ĞÅÏ¢£¬Õâ¸öº¯ÊıÃ¿¼¸¸öºÁÃë½«±»µ÷ÓÃÒ»´Î¡£\n
+        ²»¶ÏµÄ½ÓÊÜÏûÏ¢ºÍ·¢ËÍÏûÏ¢´ÓÏûÏ¢¶ÓÁĞÖĞ\n
+        ´ËÍâ£¬Èç¹ûÎÒÃÇÕıÔÚµÈ´ıÒ»¸öµØÖ·¾ºÕù·´Ó¦¡£\n
+        Èç¹û³¬Ê±£¬ÎÒÃÇÖ»½ÓÊÕÌØ¶¨µÄÏûÏ¢£¨Ä¿±êµØÖ· = J1939_Address£©\n
 
-        å¦‚æœè®¾å¤‡ä½¿ç”¨ä¸­æ–­ï¼Œæ­¤å‡½æ•°è¢«è°ƒç”¨ï¼Œåœ¨è°ƒç”¨J1939_Initializationï¼ˆï¼‰å‡½æ•°åï¼Œå› ä¸º\n
-        J1939_Initializationï¼ˆï¼‰å¯èƒ½åˆå§‹åŒ–WaitingForAddressClaimContentionæ ‡è¯†ä½ä¸º1.\n
+        Èç¹ûÉè±¸Ê¹ÓÃÖĞ¶Ï£¬´Ëº¯Êı±»µ÷ÓÃ£¬ÔÚµ÷ÓÃJ1939_Initialization£¨£©º¯Êıºó£¬ÒòÎª\n
+        J1939_Initialization£¨£©¿ÉÄÜ³õÊ¼»¯WaitingForAddressClaimContention±êÊ¶Î»Îª1.\n
 
-        å¦‚æœæ¥å—åˆ°å‘½ä»¤åœ°å€æ¶ˆæ¯ï¼Œè¿™ä¸ªå‡½æ•°ä¹Ÿå¿…é¡»è¢«è°ƒç”¨ï¼Œä»¥é˜²ä¸‡ä¸€æ€»çº¿è¦æ±‚æˆ‘ä»¬æ”¹å˜åœ°å€\n
+        Èç¹û½ÓÊÜµ½ÃüÁîµØÖ·ÏûÏ¢£¬Õâ¸öº¯ÊıÒ²±ØĞë±»µ÷ÓÃ£¬ÒÔ·ÀÍòÒ»×ÜÏßÒªÇóÎÒÃÇ¸Ä±äµØÖ·\n
 
-        å¦‚æœä½¿ç”¨ä¸­æ–­æ¨¡å¼ï¼Œæœ¬ç¨‹åºå°†ä¸ä¼šå¤„ç†æ¥å—å’Œå‘é€æ¶ˆæ¯ï¼Œåªå¤„ç†åœ°å€ç«äº‰è¶…æ—¶ã€‚\n
+        Èç¹ûÊ¹ÓÃÖĞ¶ÏÄ£Ê½£¬±¾³ÌĞò½«²»»á´¦Àí½ÓÊÜºÍ·¢ËÍÏûÏ¢£¬Ö»´¦ÀíµØÖ·¾ºÕù³¬Ê±¡£\n
 */
-//å£°æ˜TPè½®è¯¢å‡½æ•°
+//ÉùÃ÷TPÂÖÑ¯º¯Êı
 void J1939_TP_Poll();
 void J1939_Poll()
 {
-    //æˆ‘ä»¬å¿…é¡»è°ƒç”¨J1939_ReceiveMessagesæ¥å—å‡½æ•°ï¼Œåœ¨æ—¶é—´è¢«é‡ç½®ä¸º0ä¹‹å‰ã€‚
+    //ÎÒÃÇ±ØĞëµ÷ÓÃJ1939_ReceiveMessages½ÓÊÜº¯Êı£¬ÔÚÊ±¼ä±»ÖØÖÃÎª0Ö®Ç°¡£
 #if J1939_POLL_ECAN == J1939_TRUE
     Can_Node      = Select_CAN_NODE_1;
     J1939_Address = NodeAddress_1;
@@ -576,27 +576,27 @@ void J1939_Response(const j1939_uint32_t PGN);
 #if J1939SoftwareFilterEn == J1939_TRUE
 
 /**
-* @return    RC_SUCCESS         æ¶ˆæ¯æ˜¯å¯ä»¥æ¥å—
-* @return    RC_CANNOTTRANSMIT  æ¶ˆæ¯æ˜¯ä¸å¯ä»¥æ¥å—
-* @note è½¯ä»¶æ»¤æ³¢å™¨\n
-* @note åŸºäºSAE J1939åè®®ï¼Œæˆ‘ä»¬éœ€è¦CANæ§åˆ¶å™¨æä¾›è‡³å°‘3ä¸ªæ»¤æ³¢å™¨ç»™J1939åè®®ä»£ç ã€‚ä¸‰ä¸ªæ»¤æ³¢å™¨åˆ†åˆ«é…ç½®å¦‚ä¸‹ï¼š
-        1. è®¾ç½®æ»¤æ³¢å™¨0ï¼Œåªæ¥å—å¹¿æ’­ä¿¡æ¯ï¼ˆPF = 240 -255ï¼‰ã€‚
-        2. è®¾ç½®è®¾ç½®æ»¤æ³¢å™¨1ï¼Œ2åªæ¥å—å…¨å±€åœ°å€ï¼ˆJ1939_GLOBAL_ADDRESSï¼‰
-        3. éšç€ç¨‹åºçš„è¿è¡Œï¼Œå°†æ”¹å˜æ»¤æ³¢å™¨2ï¼Œæ¥é€‚åº”ç¨‹åºé€»è¾‘ã€‚
+* @return    RC_SUCCESS         ÏûÏ¢ÊÇ¿ÉÒÔ½ÓÊÜ
+* @return    RC_CANNOTTRANSMIT  ÏûÏ¢ÊÇ²»¿ÉÒÔ½ÓÊÜ
+* @note Èí¼şÂË²¨Æ÷\n
+* @note »ùÓÚSAE J1939Ğ­Òé£¬ÎÒÃÇĞèÒªCAN¿ØÖÆÆ÷Ìá¹©ÖÁÉÙ3¸öÂË²¨Æ÷¸øJ1939Ğ­Òé´úÂë¡£Èı¸öÂË²¨Æ÷·Ö±ğÅäÖÃÈçÏÂ£º
+        1. ÉèÖÃÂË²¨Æ÷0£¬Ö»½ÓÊÜ¹ã²¥ĞÅÏ¢£¨PF = 240 -255£©¡£
+        2. ÉèÖÃÉèÖÃÂË²¨Æ÷1£¬2Ö»½ÓÊÜÈ«¾ÖµØÖ·£¨J1939_GLOBAL_ADDRESS£©
+        3. Ëæ×Å³ÌĞòµÄÔËĞĞ£¬½«¸Ä±äÂË²¨Æ÷2£¬À´ÊÊÓ¦³ÌĞòÂß¼­¡£
 */
 j1939_uint8_t J1939_Messages_Filter(J1939_MESSAGE *MsgPtr)
 {
-    /*æ»¤æ³¢å™¨0*/
+    /*ÂË²¨Æ÷0*/
     if ((MsgPtr->Mxe.PDUFormat) >= 240)
     {
         return RC_SUCCESS;
     }
-    /*æ»¤æ³¢å™¨1*/
+    /*ÂË²¨Æ÷1*/
     if (((MsgPtr->Mxe.PDUFormat) < 240) && (MsgPtr->Mxe.PDUSpecific == J1939_GLOBAL_ADDRESS))
     {
         return RC_SUCCESS;
     }
-    /*æ»¤æ³¢å™¨2*/
+    /*ÂË²¨Æ÷2*/
     switch (Can_Node)
     {
         case Select_CAN_NODE_1:
@@ -642,19 +642,19 @@ j1939_uint8_t J1939_Messages_Filter(J1939_MESSAGE *MsgPtr)
 #endif //J1939SoftwareFilterEn
 
 /**
-* @note è¿™æ®µç¨‹åºè¢«è°ƒç”¨ï¼Œå½“CANæ”¶å‘å™¨æ¥å—æ•°æ®ï¼ˆä¸­æ–­ æˆ–è€… è½®è¯¢ï¼‰ã€‚\n
-        å¦‚æœä¸€ä¸ªä¿¡æ¯è¢«æ¥å—, å®ƒå°†è¢«è°ƒç”¨\n
-        å¦‚æœä¿¡æ¯æ˜¯ä¸€ä¸ªç½‘ç»œç®¡ç†ä¿¡æ¯æˆ–é•¿å¸§ä¼ è¾“ï¼ˆTPï¼‰ï¼Œæ¥å—çš„ä¿¡æ¯å°†è¢«åŠ å·¥å¤„ç†ï¼Œåœ¨è¿™ä¸ªå‡½æ•°ä¸­ã€‚\n
-        å¦åˆ™, ä¿¡æ¯å°†æ”¾ç½®åœ¨ç”¨æˆ·çš„æ¥æ”¶é˜Ÿåˆ—ã€‚\n
-        æ³¨æ„ï¼šåœ¨è¿™æ®µç¨‹åºè¿è¡ŒæœŸé—´ä¸­æ–­æ˜¯å¤±èƒ½çš„ã€‚\n
+* @note Õâ¶Î³ÌĞò±»µ÷ÓÃ£¬µ±CANÊÕ·¢Æ÷½ÓÊÜÊı¾İ£¨ÖĞ¶Ï »òÕß ÂÖÑ¯£©¡£\n
+        Èç¹ûÒ»¸öĞÅÏ¢±»½ÓÊÜ, Ëü½«±»µ÷ÓÃ\n
+        Èç¹ûĞÅÏ¢ÊÇÒ»¸öÍøÂç¹ÜÀíĞÅÏ¢»ò³¤Ö¡´«Êä£¨TP£©£¬½ÓÊÜµÄĞÅÏ¢½«±»¼Ó¹¤´¦Àí£¬ÔÚÕâ¸öº¯ÊıÖĞ¡£\n
+        ·ñÔò, ĞÅÏ¢½«·ÅÖÃÔÚÓÃ»§µÄ½ÓÊÕ¶ÓÁĞ¡£\n
+        ×¢Òâ£ºÔÚÕâ¶Î³ÌĞòÔËĞĞÆÚ¼äÖĞ¶ÏÊÇÊ§ÄÜµÄ¡£\n
 */
 void J1939_ReceiveMessages(void)
 {
 #if J1939_TP_RX_TX
     j1939_uint32_t _pgn = 0;
 #endif //J1939_TP_RX_TX
-    /*ä»æ¥æ”¶ç¼“å­˜ä¸­è¯»å–ä¿¡æ¯åˆ°OneMessageä¸­ï¼ŒOneMessageæ˜¯ä¸€ä¸ªå…¨å±€å˜é‡*/
-    /*Port_CAN_Receiveå‡½æ•°è¯»å–åˆ°æ•°æ®è¿”å›1ï¼Œæ²¡æœ‰æ•°æ®åˆ™è¿”å›0*/
+    /*´Ó½ÓÊÕ»º´æÖĞ¶ÁÈ¡ĞÅÏ¢µ½OneMessageÖĞ£¬OneMessageÊÇÒ»¸öÈ«¾Ö±äÁ¿*/
+    /*Port_CAN_Receiveº¯Êı¶ÁÈ¡µ½Êı¾İ·µ»Ø1£¬Ã»ÓĞÊı¾İÔò·µ»Ø0*/
     if (Port_CAN_Receive(&OneMessage))
     {
 #if J1939SoftwareFilterEn == J1939_TRUE
@@ -666,7 +666,7 @@ void J1939_ReceiveMessages(void)
         switch (OneMessage.Mxe.PDUFormat)
         {
 #if J1939_TP_RX_TX
-            case J1939_PF_TP_CM: //å‚è€ƒJ1939-21 TPå¤šå¸§ä¼ è¾“åè®®
+            case J1939_PF_TP_CM: //²Î¿¼J1939-21 TP¶àÖ¡´«ÊäĞ­Òé
                 _pgn = (j1939_uint32_t)((OneMessage.Mxe.Data[7] << 16) & 0xFF0000)
                        + (j1939_uint32_t)((OneMessage.Mxe.Data[6] << 8) & 0xFF00)
                        + (j1939_uint32_t)((OneMessage.Mxe.Data[5]) & 0xFF);
@@ -681,13 +681,13 @@ void J1939_ReceiveMessages(void)
                         TP_RX_MSG.tp_rx_msg.PGN = (j1939_uint32_t)((OneMessage.Mxe.Data[7] << 16) & 0xFF0000)
                                                   + (j1939_uint32_t)((OneMessage.Mxe.Data[6] << 8) & 0xFF00)
                                                   + (j1939_uint32_t)((OneMessage.Mxe.Data[5]) & 0xFF);
-                        /*å¦‚æœç³»ç»Ÿç¹å¿™*/
+                        /*Èç¹ûÏµÍ³·±Ã¦*/
                         if (TP_RX_MSG.osbusy)
                         {
                             TP_RX_MSG.state = J1939_TP_RX_ERROR;
                             break;
                         }
-                        /*åˆ¤æ–­æ˜¯å¦æœ‰è¶³å¤Ÿçš„å†…å­˜æ¥æ”¶æ•°æ®ï¼Œå¦‚æœæ²¡æœ‰ç›´æ¥ï¼Œæ–­å¼€è¿æ¥*/
+                        /*ÅĞ¶ÏÊÇ·ñÓĞ×ã¹»µÄÄÚ´æ½ÓÊÕÊı¾İ£¬Èç¹ûÃ»ÓĞÖ±½Ó£¬¶Ï¿ªÁ¬½Ó*/
                         if (((j1939_uint32_t)((OneMessage.Mxe.Data[2] << 8) & 0xFF00)
                              + (j1939_uint32_t)((OneMessage.Mxe.Data[1]) & 0xFF))
                             > J1939_TP_MAX_MESSAGE_LENGTH)
@@ -707,29 +707,29 @@ void J1939_ReceiveMessages(void)
                 }
                 if (J1939_TP_Flags_t.state == J1939_TP_TX)
                 {
-                    /*æ ¡éªŒPGN*/
+                    /*Ğ£ÑéPGN*/
                     if (_pgn == TP_TX_MSG.tp_tx_msg.PGN)
                     {
                         switch (OneMessage.Mxe.Data[0])
                         {
                             case J1939_RTS_CONTROL_BYTE:
-                                /* ç¨‹åºè¿è¡Œåˆ°è¿™é‡Œï¼Œè¯´æ˜å·²ç»ä¸ç½‘ç»œä¸­è®¾å¤‡1å»ºç«‹è™šæ‹Ÿé“¾æ¥ï¼ˆä½œä¸ºå‘é€ç«¯ï¼‰ï¼Œä½†æ˜¯æ”¶åˆ°è®¾å¤‡2çš„é“¾æ¥è¯·æ±‚ï¼Œå¹¶ä¸”åŒä¸€ä¸ªPGNæ¶ˆæ¯è¯·æ±‚*/
-                                /* æ ¹æ®J1939-21æ•°æ®é“¾è·¯å±‚çš„è§„å®šï¼Œæˆ‘ä»¬è¦ä¿æŒåŸæœ‰çš„é“¾æ¥ï¼Œä¸åšä»»ä½•äº‹ï¼Œè®¾å¤‡2ä¼šåº”ä¸ºè¶…æ—¶è‡ªåŠ¨æ”¾å¼ƒé“¾æ¥*/
+                                /* ³ÌĞòÔËĞĞµ½ÕâÀï£¬ËµÃ÷ÒÑ¾­ÓëÍøÂçÖĞÉè±¸1½¨Á¢ĞéÄâÁ´½Ó£¨×÷Îª·¢ËÍ¶Ë£©£¬µ«ÊÇÊÕµ½Éè±¸2µÄÁ´½ÓÇëÇó£¬²¢ÇÒÍ¬Ò»¸öPGNÏûÏ¢ÇëÇó*/
+                                /* ¸ù¾İJ1939-21Êı¾İÁ´Â·²ãµÄ¹æ¶¨£¬ÎÒÃÇÒª±£³ÖÔ­ÓĞµÄÁ´½Ó£¬²»×öÈÎºÎÊÂ£¬Éè±¸2»áÓ¦Îª³¬Ê±×Ô¶¯·ÅÆúÁ´½Ó*/
                                 break;
                             case J1939_CTS_CONTROL_BYTE:
                                 if ((J1939_TP_TX_CM_WAIT == TP_TX_MSG.state) || (J1939_TP_WAIT_ACK == TP_TX_MSG.state))
                                 {
-                                    /* å‘é€ç­‰å¾…ä¿æŒ */
+                                    /* ·¢ËÍµÈ´ı±£³Ö */
                                     if (0x00u == OneMessage.Mxe.Data[1])
                                     {
-                                        /* åˆ·æ–°ç­‰å¾…è®¡æ•°å™¨ */
+                                        /* Ë¢ĞÂµÈ´ı¼ÆÊıÆ÷ */
                                         TP_TX_MSG.time = J1939_TP_T4;
                                     }
                                     else
                                     {
                                         if ((OneMessage.Mxe.Data[2] + OneMessage.Mxe.Data[1]) > (TP_TX_MSG.packets_total + 1))
                                         {
-                                            /*è¯·æ±‚è¶…å‡ºæ•°æ®åŒ…èŒƒå›´*/
+                                            /*ÇëÇó³¬³öÊı¾İ°ü·¶Î§*/
                                             TP_TX_MSG.state = J1939_TP_TX_ERROR;
                                         }
                                         else
@@ -747,10 +747,10 @@ void J1939_ReceiveMessages(void)
                                 {
                                     TP_TX_MSG.state = J1939_TX_DONE;
                                 }
-                                //è¿™é‡Œå¯ä»¥å¢åŠ ä¸€ä¸ªå¯¹æ•°æ®çš„æ ¡éªŒ
+                                //ÕâÀï¿ÉÒÔÔö¼ÓÒ»¸ö¶ÔÊı¾İµÄĞ£Ñé
                                 break;
                             case J1939_CONNABORT_CONTROL_BYTE:
-                                //æ”¶åˆ°ä¸€ä¸ªæ”¾å¼ƒè¿æ¥ï¼Œä»€ä¹ˆéƒ½ä¸åšï¼Œåè®®ä¼šåœ¨ä¸€æ®µå»¶æ—¶æ—¶é—´åä¸»åŠ¨æ”¾å¼ƒé“¾æ¥
+                                //ÊÕµ½Ò»¸ö·ÅÆúÁ¬½Ó£¬Ê²Ã´¶¼²»×ö£¬Ğ­Òé»áÔÚÒ»¶ÎÑÓÊ±Ê±¼äºóÖ÷¶¯·ÅÆúÁ´½Ó
                                 break;
                             default:
                                 break;
@@ -772,13 +772,13 @@ void J1939_ReceiveMessages(void)
                     TP_RX_MSG.tp_rx_msg.data[(OneMessage.Mxe.Data[0] - 1) * 7u + 4] = OneMessage.Mxe.Data[5];
                     TP_RX_MSG.tp_rx_msg.data[(OneMessage.Mxe.Data[0] - 1) * 7u + 5] = OneMessage.Mxe.Data[6];
                     TP_RX_MSG.tp_rx_msg.data[(OneMessage.Mxe.Data[0] - 1) * 7u + 6] = OneMessage.Mxe.Data[7];
-                    /*ç‰¹æ®Šå¤„ç†é‡æ–°æ¥å—å·²æ¥å—è¿‡çš„æ•°æ®åŒ…*/
+                    /*ÌØÊâ´¦ÀíÖØĞÂ½ÓÊÜÒÑ½ÓÊÜ¹ıµÄÊı¾İ°ü*/
                     if ((OneMessage.Mxe.Data[0]) > TP_RX_MSG.packets_ok_num)
                     {
                         TP_RX_MSG.packets_ok_num++;
                     }
                     TP_RX_MSG.time = J1939_TP_T1;
-                    /*åˆ¤æ–­æ˜¯å¦æ”¶åˆ°å¶æ•°ä¸ªæ•°æ®åŒ…æˆ–è€…è¯»å–åˆ°æœ€åä¸€ä¸ªæ•°æ®åŒ…*/
+                    /*ÅĞ¶ÏÊÇ·ñÊÕµ½Å¼Êı¸öÊı¾İ°ü»òÕß¶ÁÈ¡µ½×îºóÒ»¸öÊı¾İ°ü*/
                     if ((TP_RX_MSG.packets_ok_num % 2 == 0) || (TP_RX_MSG.packets_ok_num == TP_RX_MSG.packets_total))
                     {
                         TP_RX_MSG.state = J1939_TP_RX_READ_DATA;
@@ -786,11 +786,11 @@ void J1939_ReceiveMessages(void)
                     }
                     break;
                 }
-                //ç¨‹åºä¸å¯èƒ½è¿è¡Œåˆ°è¿™ï¼Œä½†æ˜¯æˆ‘ä»¬ä¸èƒ½æ”¾å¼ƒæ¥å—çš„æ•°æ®åŒ…
+                //³ÌĞò²»¿ÉÄÜÔËĞĞµ½Õâ£¬µ«ÊÇÎÒÃÇ²»ÄÜ·ÅÆú½ÓÊÜµÄÊı¾İ°ü
                 goto PutInReceiveQueue;
 #endif //J1939_TP_RX_TX
             case J1939_PF_REQUEST:
-                /*ç”¨OneMessage.Mxe.PGN æ¥å­˜ä¸‹è¢«è¯·æ±‚çš„PGN*/
+                /*ÓÃOneMessage.Mxe.PGN À´´æÏÂ±»ÇëÇóµÄPGN*/
                 if (OneMessage.Mxe.Data[1] < 240)
                 {
                     OneMessage.Mxe.PGN = (j1939_uint32_t)((OneMessage.Mxe.Data[2] << 16) & 0x030000)
@@ -850,14 +850,14 @@ void J1939_ReceiveMessages(void)
                             }
                             else
                             {
-                                J1939_Flags.ReceivedMessagesdCover              = 1; //äº§ç”Ÿæ•°æ®è¦†ç›–
+                                J1939_Flags.ReceivedMessagesdCover              = 1; //²úÉúÊı¾İ¸²¸Ç
                                 J1939_Flags.ReceivedMessagesdCoverOrDroppedNode = Select_CAN_NODE_1;
                             }
                             RXQueue_1[RXTail_1] = OneMessage;
                         }
                         else
                         {
-                            J1939_Flags.ReceivedMessagesDropped = 1; //äº§ç”Ÿæ•°æ®æº¢å‡º
+                            J1939_Flags.ReceivedMessagesDropped = 1; //²úÉúÊı¾İÒç³ö
                         }
                         break;
                     }
@@ -876,7 +876,7 @@ void J1939_ReceiveMessages(void)
                             }
                             else
                             {
-                                J1939_Flags.ReceivedMessagesdCover              = 1; //äº§ç”Ÿæ•°æ®è¦†ç›–
+                                J1939_Flags.ReceivedMessagesdCover              = 1; //²úÉúÊı¾İ¸²¸Ç
                                 J1939_Flags.ReceivedMessagesdCoverOrDroppedNode = Select_CAN_NODE_2;
                             }
                             RXQueue_2[RXTail_2] = OneMessage;
@@ -902,7 +902,7 @@ void J1939_ReceiveMessages(void)
                             }
                             else
                             {
-                                J1939_Flags.ReceivedMessagesdCover              = 1; //äº§ç”Ÿæ•°æ®è¦†ç›–
+                                J1939_Flags.ReceivedMessagesdCover              = 1; //²úÉúÊı¾İ¸²¸Ç
                                 J1939_Flags.ReceivedMessagesdCoverOrDroppedNode = Select_CAN_NODE_3;
                             }
                             RXQueue_3[RXTail_3] = OneMessage;
@@ -928,7 +928,7 @@ void J1939_ReceiveMessages(void)
                             }
                             else
                             {
-                                J1939_Flags.ReceivedMessagesdCover              = 1; //äº§ç”Ÿæ•°æ®è¦†ç›–
+                                J1939_Flags.ReceivedMessagesdCover              = 1; //²úÉúÊı¾İ¸²¸Ç
                                 J1939_Flags.ReceivedMessagesdCoverOrDroppedNode = Select_CAN_NODE_4;
                             }
                             RXQueue_4[RXTail_4] = OneMessage;
@@ -950,10 +950,10 @@ void J1939_ReceiveMessages(void)
 }
 
 /**
-* @return    RC_SUCCESS          ä¿¡æ¯å‘é€æˆåŠŸ
-* @return    RC_CANNOTTRANSMIT   ç³»ç»Ÿæ²¡æœ‰å‘é€æ¶ˆæ¯,æ²¡æœ‰è¦å‘é€çš„æ¶ˆæ¯,æˆ–é”™è¯¯çš„CANè®¾å¤‡
-* @note      è°ƒç”¨è¿™ä¸ªå‡½æ•°åï¼Œå¦‚æœå‘é€æ¶ˆæ¯åˆ—é˜Ÿä¸­æœ‰æ¶ˆæ¯å°±ä½ï¼Œåˆ™ä¼šå‘é€æ¶ˆæ¯ ï¼Œå¦‚æœä¸èƒ½å‘é€æ¶ˆæ¯ï¼Œç›¸å…³çš„é”™è¯¯ä»£ç å°†è¿”å›ã€‚\n
-             ç¨‹åºè¿è¡ŒæœŸé—´ï¼Œä¸­æ–­æ˜¯è¢«å¤±èƒ½çš„ã€‚
+* @return    RC_SUCCESS          ĞÅÏ¢·¢ËÍ³É¹¦
+* @return    RC_CANNOTTRANSMIT   ÏµÍ³Ã»ÓĞ·¢ËÍÏûÏ¢,Ã»ÓĞÒª·¢ËÍµÄÏûÏ¢,»ò´íÎóµÄCANÉè±¸
+* @note      µ÷ÓÃÕâ¸öº¯Êıºó£¬Èç¹û·¢ËÍÏûÏ¢ÁĞ¶ÓÖĞÓĞÏûÏ¢¾ÍÎ»£¬Ôò»á·¢ËÍÏûÏ¢ £¬Èç¹û²»ÄÜ·¢ËÍÏûÏ¢£¬Ïà¹ØµÄ´íÎó´úÂë½«·µ»Ø¡£\n
+             ³ÌĞòÔËĞĞÆÚ¼ä£¬ÖĞ¶ÏÊÇ±»Ê§ÄÜµÄ¡£
 */
 static j1939_uint8_t J1939_TransmitMessages()
 {
@@ -963,7 +963,7 @@ static j1939_uint8_t J1939_TransmitMessages()
         {
             if (TXQueueCount_1 == 0)
             {
-                //å¦‚æœæ²¡æœ‰è¦å‘é€çš„æ¶ˆæ¯ä»å‘é€æ¶ˆæ¯åˆ—é˜Ÿä¸­ï¼Œæ¢å¤ä¸­æ–­(æ¸…ç©ºå‘é€æ ‡è¯†ä½)
+                //Èç¹ûÃ»ÓĞÒª·¢ËÍµÄÏûÏ¢´Ó·¢ËÍÏûÏ¢ÁĞ¶ÓÖĞ£¬»Ö¸´ÖĞ¶Ï(Çå¿Õ·¢ËÍ±êÊ¶Î»)
 #if J1939_POLL_ECAN == J1939_FALSE
                 Port_TXinterruptEnable();
 #endif
@@ -973,8 +973,8 @@ static j1939_uint8_t J1939_TransmitMessages()
             {
                 while (TXQueueCount_1 > 0)
                 {
-                    /*ç¡®ä¿ä¸Šæ¬¡æ•°æ®å‘é€æˆåŠŸ*/
-                    /**************å¯å¢åŠ ä¸€ä¸ªåˆ¤æ–­å‡½æ•°**************************/
+                    /*È·±£ÉÏ´ÎÊı¾İ·¢ËÍ³É¹¦*/
+                    /**************¿ÉÔö¼ÓÒ»¸öÅĞ¶Ïº¯Êı**************************/
 
                     TXQueue_1[TXHead_1].Mxe.SourceAddress = NodeAddress_1;
 
@@ -987,7 +987,7 @@ static j1939_uint8_t J1939_TransmitMessages()
                     TXQueueCount_1--;
                 }
 
-                /*é…ç½®äº†ä¸€äº›æ ‡è¯†ä½ï¼Œä½¿èƒ½ä¸­æ–­*/
+                /*ÅäÖÃÁËÒ»Ğ©±êÊ¶Î»£¬Ê¹ÄÜÖĞ¶Ï*/
 #if J1939_POLL_ECAN == J1939_FALSE
                 Port_TXinterruptEnable();
 #endif
@@ -998,7 +998,7 @@ static j1939_uint8_t J1939_TransmitMessages()
         {
             if (TXQueueCount_2 == 0)
             {
-                //å¦‚æœæ²¡æœ‰è¦å‘é€çš„æ¶ˆæ¯ä»å‘é€æ¶ˆæ¯åˆ—é˜Ÿä¸­ï¼Œæ¢å¤ä¸­æ–­(æ¸…ç©ºå‘é€æ ‡è¯†ä½)
+                //Èç¹ûÃ»ÓĞÒª·¢ËÍµÄÏûÏ¢´Ó·¢ËÍÏûÏ¢ÁĞ¶ÓÖĞ£¬»Ö¸´ÖĞ¶Ï(Çå¿Õ·¢ËÍ±êÊ¶Î»)
 #if J1939_POLL_ECAN == J1939_FALSE
                 Port_TXinterruptEnable();
 #endif
@@ -1008,8 +1008,8 @@ static j1939_uint8_t J1939_TransmitMessages()
             {
                 while (TXQueueCount_2 > 0)
                 {
-                    /*ç¡®ä¿ä¸Šæ¬¡æ•°æ®å‘é€æˆåŠŸ*/
-                    /**************å¯å¢åŠ ä¸€ä¸ªåˆ¤æ–­å‡½æ•°**************************/
+                    /*È·±£ÉÏ´ÎÊı¾İ·¢ËÍ³É¹¦*/
+                    /**************¿ÉÔö¼ÓÒ»¸öÅĞ¶Ïº¯Êı**************************/
 
                     TXQueue_2[TXHead_2].Mxe.SourceAddress = NodeAddress_2;
 
@@ -1022,7 +1022,7 @@ static j1939_uint8_t J1939_TransmitMessages()
                     TXQueueCount_2--;
                 }
 
-                /*é…ç½®äº†ä¸€äº›æ ‡è¯†ä½ï¼Œä½¿èƒ½ä¸­æ–­*/
+                /*ÅäÖÃÁËÒ»Ğ©±êÊ¶Î»£¬Ê¹ÄÜÖĞ¶Ï*/
 #if J1939_POLL_ECAN == J1939_FALSE
                 Port_TXinterruptEnable();
 #endif
@@ -1033,7 +1033,7 @@ static j1939_uint8_t J1939_TransmitMessages()
         {
             if (TXQueueCount_3 == 0)
             {
-                //å¦‚æœæ²¡æœ‰è¦å‘é€çš„æ¶ˆæ¯ä»å‘é€æ¶ˆæ¯åˆ—é˜Ÿä¸­ï¼Œæ¢å¤ä¸­æ–­(æ¸…ç©ºå‘é€æ ‡è¯†ä½)
+                //Èç¹ûÃ»ÓĞÒª·¢ËÍµÄÏûÏ¢´Ó·¢ËÍÏûÏ¢ÁĞ¶ÓÖĞ£¬»Ö¸´ÖĞ¶Ï(Çå¿Õ·¢ËÍ±êÊ¶Î»)
 #if J1939_POLL_ECAN == J1939_FALSE
                 Port_TXinterruptEnable();
 #endif
@@ -1043,8 +1043,8 @@ static j1939_uint8_t J1939_TransmitMessages()
             {
                 while (TXQueueCount_3 > 0)
                 {
-                    /*ç¡®ä¿ä¸Šæ¬¡æ•°æ®å‘é€æˆåŠŸ*/
-                    /**************å¯å¢åŠ ä¸€ä¸ªåˆ¤æ–­å‡½æ•°**************************/
+                    /*È·±£ÉÏ´ÎÊı¾İ·¢ËÍ³É¹¦*/
+                    /**************¿ÉÔö¼ÓÒ»¸öÅĞ¶Ïº¯Êı**************************/
 
                     TXQueue_3[TXHead_3].Mxe.SourceAddress = NodeAddress_3;
 
@@ -1057,7 +1057,7 @@ static j1939_uint8_t J1939_TransmitMessages()
                     TXQueueCount_3--;
                 }
 
-                /*é…ç½®äº†ä¸€äº›æ ‡è¯†ä½ï¼Œä½¿èƒ½ä¸­æ–­*/
+                /*ÅäÖÃÁËÒ»Ğ©±êÊ¶Î»£¬Ê¹ÄÜÖĞ¶Ï*/
 #if J1939_POLL_ECAN == J1939_FALSE
                 Port_TXinterruptEnable();
 #endif
@@ -1068,7 +1068,7 @@ static j1939_uint8_t J1939_TransmitMessages()
         {
             if (TXQueueCount_4 == 0)
             {
-                //å¦‚æœæ²¡æœ‰è¦å‘é€çš„æ¶ˆæ¯ä»å‘é€æ¶ˆæ¯åˆ—é˜Ÿä¸­ï¼Œæ¢å¤ä¸­æ–­(æ¸…ç©ºå‘é€æ ‡è¯†ä½)
+                //Èç¹ûÃ»ÓĞÒª·¢ËÍµÄÏûÏ¢´Ó·¢ËÍÏûÏ¢ÁĞ¶ÓÖĞ£¬»Ö¸´ÖĞ¶Ï(Çå¿Õ·¢ËÍ±êÊ¶Î»)
 #if J1939_POLL_ECAN == J1939_FALSE
                 Port_TXinterruptEnable();
 #endif
@@ -1078,8 +1078,8 @@ static j1939_uint8_t J1939_TransmitMessages()
             {
                 while (TXQueueCount_4 > 0)
                 {
-                    /*ç¡®ä¿ä¸Šæ¬¡æ•°æ®å‘é€æˆåŠŸ*/
-                    /**************å¯å¢åŠ ä¸€ä¸ªåˆ¤æ–­å‡½æ•°**************************/
+                    /*È·±£ÉÏ´ÎÊı¾İ·¢ËÍ³É¹¦*/
+                    /**************¿ÉÔö¼ÓÒ»¸öÅĞ¶Ïº¯Êı**************************/
 
                     TXQueue_4[TXHead_4].Mxe.SourceAddress = NodeAddress_4;
 
@@ -1092,7 +1092,7 @@ static j1939_uint8_t J1939_TransmitMessages()
                     TXQueueCount_4--;
                 }
 
-                /*é…ç½®äº†ä¸€äº›æ ‡è¯†ä½ï¼Œä½¿èƒ½ä¸­æ–­*/
+                /*ÅäÖÃÁËÒ»Ğ©±êÊ¶Î»£¬Ê¹ÄÜÖĞ¶Ï*/
 #if J1939_POLL_ECAN == J1939_FALSE
                 Port_TXinterruptEnable();
 #endif
@@ -1110,7 +1110,7 @@ static j1939_uint8_t J1939_TransmitMessages()
 }
 #if J1939_TP_RX_TX
 /**
-* @note å‘é€TP.DTï¼Œå‚è€ƒJ1939-21
+* @note ·¢ËÍTP.DT£¬²Î¿¼J1939-21
 */
 void J1939_TP_DT_Packet_send(void)
 {
@@ -1123,31 +1123,31 @@ void J1939_TP_DT_Packet_send(void)
     _msg.Mxe.DestinationAddress = TP_TX_MSG.tp_tx_msg.SA;
     _msg.Mxe.DataLength         = 8;
 
-    /*è·å–è¯·æ±‚å‘é€çš„æ•°æ®åŒ…æ•°é‡*/
+    /*»ñÈ¡ÇëÇó·¢ËÍµÄÊı¾İ°üÊıÁ¿*/
     if (TP_TX_MSG.packets_request_num > 0)
     {
         TP_TX_MSG.packets_request_num--;
-        /*è·å–æ•°æ®åç§»æŒ‡é’ˆ*/
+        /*»ñÈ¡Êı¾İÆ«ÒÆÖ¸Õë*/
         _packet_offset_p = (j1939_uint16_t)(TP_TX_MSG.packet_offset_p * 7u);
-        /*åŠ è½½æ•°æ®åŒ…ç¼–å·*/
+        /*¼ÓÔØÊı¾İ°ü±àºÅ*/
         _msg.Mxe.Data[0] = (j1939_uint8_t)(1u + TP_TX_MSG.packet_offset_p);
 
         for (_i = 0; _i < 7; _i++)
         {
             _msg.Mxe.Data[_i + 1] = TP_TX_MSG.tp_tx_msg.data[_packet_offset_p + _i];
         }
-        /*æ˜¯å¦æ˜¯æœ€åä¸€åŒ…æ•°æ®æ¶ˆæ¯*/
+        /*ÊÇ·ñÊÇ×îºóÒ»°üÊı¾İÏûÏ¢*/
         if (TP_TX_MSG.packet_offset_p == (TP_TX_MSG.packets_total - 1u))
         {
-            /*å‚æ•°ç¾¤æ˜¯å¦èƒ½è¢«å¡«æ»¡ï¼Œæ˜¯å¦éœ€è¦å¡«å……ï¼Œ*/
+            /*²ÎÊıÈºÊÇ·ñÄÜ±»ÌîÂú£¬ÊÇ·ñĞèÒªÌî³ä£¬*/
             if (_packet_offset_p > TP_TX_MSG.tp_tx_msg.byte_count - 7)
             {
-                /*è®¡ç®—éœ€è¦å¡«å……çš„æ•°æ®æ•°*/
+                /*¼ÆËãĞèÒªÌî³äµÄÊı¾İÊı*/
                 _i = TP_TX_MSG.tp_tx_msg.byte_count - _packet_offset_p - 7;
 
                 for (; _i < 0; _i++)
                 {
-                    /*æˆ‘ä»¬é»˜è®¤J1939çš„å‚æ•°ç¾¤å¤§å°ä¸º8*/
+                    /*ÎÒÃÇÄ¬ÈÏJ1939µÄ²ÎÊıÈº´óĞ¡Îª8*/
                     _msg.Mxe.Data[_i + 8] = J1939_RESERVED_BYTE;
                 }
             }
@@ -1155,17 +1155,23 @@ void J1939_TP_DT_Packet_send(void)
             TP_TX_MSG.packets_request_num = 0;
             TP_TX_MSG.packet_offset_p     = 0;
             TP_TX_MSG.time                = J1939_TP_T3;
-            /* è·³è½¬æ­¥éª¤ï¼Œç­‰å¾…ç»“æŸç¡®è®¤æˆ–åˆ™é‡æ–°å‘é€æ•°æ®è¯·æ±‚*/
+            /* Ìø×ª²½Öè£¬µÈ´ı½áÊøÈ·ÈÏ»òÔòÖØĞÂ·¢ËÍÊı¾İÇëÇó*/
             TP_TX_MSG.state = J1939_TP_WAIT_ACK;
+
+            // Yangwb:Ôö¼ÓBAM·¢ËÍ
+            if (TP_TX_MSG.tp_tx_msg.SA == J1939_GLOBAL_ADDRESS)
+            {
+                TP_TX_MSG.state = J1939_TX_DONE;
+            }
         }
         else
         {
-            /*ä¸ºä¸‹ä¸€ä¸ªæ•°æ®å‘é€åšå‡†å¤‡*/
+            /*ÎªÏÂÒ»¸öÊı¾İ·¢ËÍ×ö×¼±¸*/
             TP_TX_MSG.packet_offset_p++;
             TP_TX_MSG.state = J1939_TP_TX_DT;
         }
 
-        /*å¯èƒ½é˜Ÿåˆ—å·²æ»¡ï¼Œå‘ä¸å‡ºå»ï¼Œä½†æ˜¯è¿™é‡Œä¸èƒ½é è¿”å›å€¼è¿›è¡Œæ— é™çš„æ­»ç­‰*/
+        /*¿ÉÄÜ¶ÓÁĞÒÑÂú£¬·¢²»³öÈ¥£¬µ«ÊÇÕâÀï²»ÄÜ¿¿·µ»ØÖµ½øĞĞÎŞÏŞµÄËÀµÈ*/
         J1939_EnqueueMessage(&_msg, Can_Node);
     }
     else
@@ -1177,7 +1183,7 @@ void J1939_TP_DT_Packet_send(void)
     }
 }
 /**
-* @note å‘é€TPã€‚CM-RTS,16,23,4,255,PGNæ¶ˆæ¯ï¼Œå‚è€ƒJ1939-21ï¼Œ
+* @note ·¢ËÍTP¡£CM-RTS,16,23,4,255,PGNÏûÏ¢£¬²Î¿¼J1939-21£¬
 */
 void J1939_CM_Start(void)
 {
@@ -1200,15 +1206,29 @@ void J1939_CM_Start(void)
     _msg.Mxe.Data[6]            = (j1939_uint8_t)(pgn_num >> 8 & 0xff);
     _msg.Mxe.Data[5]            = (j1939_uint8_t)(pgn_num & 0xff);
 
-    /*å¯èƒ½é˜Ÿåˆ—å·²æ»¡ï¼Œå‘ä¸å‡ºå»ï¼Œä½†æ˜¯è¿™é‡Œä¸èƒ½é è¿”å›å€¼è¿›è¡Œæ— é™çš„æ­»ç­‰*/
+    // Yangwb:Ôö¼ÓBAM·¢ËÍ
+    if (TP_TX_MSG.tp_tx_msg.SA == J1939_GLOBAL_ADDRESS)
+    {
+        _msg.Mxe.Data[0] = J1939_BAM_CONTROL_BYTE;
+    }
+
+    /*¿ÉÄÜ¶ÓÁĞÒÑÂú£¬·¢²»³öÈ¥£¬µ«ÊÇÕâÀï²»ÄÜ¿¿·µ»ØÖµ½øĞĞÎŞÏŞµÄËÀµÈ*/
     J1939_EnqueueMessage(&_msg, Can_Node);
 
-    /*åˆ·æ–°ç­‰å¾…æ—¶é—´ï¼Œè§¦å‘ä¸‹ä¸€ä¸ªæ­¥éª¤ï¼ˆï¼‰*/
+    /*Ë¢ĞÂµÈ´ıÊ±¼ä£¬´¥·¢ÏÂÒ»¸ö²½Öè£¨£©*/
     TP_TX_MSG.time  = J1939_TP_T3;
     TP_TX_MSG.state = J1939_TP_TX_CM_WAIT;
+
+    // Yangwb:Ôö¼ÓBAM·¢ËÍ
+    if (TP_TX_MSG.tp_tx_msg.SA == J1939_GLOBAL_ADDRESS)
+    {
+        TP_TX_MSG.packets_request_num = TP_TX_MSG.packets_total;
+        TP_TX_MSG.packet_offset_p     = 0;
+        TP_TX_MSG.state               = J1939_TP_TX_DT;
+    }
 }
 /**
-* @note ä¸­æ–­TPé“¾æ¥
+* @note ÖĞ¶ÏTPÁ´½Ó
 */
 void J1939_TP_TX_Abort(void)
 {
@@ -1231,13 +1251,13 @@ void J1939_TP_TX_Abort(void)
     _msg.Mxe.Data[6]            = (j1939_uint8_t)(pgn_num >> 8 & 0xff);
     _msg.Mxe.Data[5]            = (j1939_uint8_t)(pgn_num & 0xff);
 
-    /*å¯èƒ½é˜Ÿåˆ—å·²æ»¡ï¼Œå‘ä¸å‡ºå»ï¼Œä½†æ˜¯è¿™é‡Œä¸èƒ½é è¿”å›å€¼è¿›è¡Œæ— é™çš„æ­»ç­‰*/
+    /*¿ÉÄÜ¶ÓÁĞÒÑÂú£¬·¢²»³öÈ¥£¬µ«ÊÇÕâÀï²»ÄÜ¿¿·µ»ØÖµ½øĞĞÎŞÏŞµÄËÀµÈ*/
     J1939_EnqueueMessage(&_msg, Can_Node);
-    /*ç»“æŸå‘é€*/
+    /*½áÊø·¢ËÍ*/
     TP_TX_MSG.state = J1939_TX_DONE;
 }
 /**
-* @note ä¸­æ–­TPé“¾æ¥
+* @note ÖĞ¶ÏTPÁ´½Ó
 */
 void J1939_TP_RX_Abort(void)
 {
@@ -1260,13 +1280,13 @@ void J1939_TP_RX_Abort(void)
     _msg.Mxe.Data[6]            = (j1939_uint8_t)(pgn_num >> 8 & 0xff);
     _msg.Mxe.Data[5]            = (j1939_uint8_t)(pgn_num & 0xff);
 
-    /*å¯èƒ½é˜Ÿåˆ—å·²æ»¡ï¼Œå‘ä¸å‡ºå»ï¼Œä½†æ˜¯è¿™é‡Œä¸èƒ½é è¿”å›å€¼è¿›è¡Œæ— é™çš„æ­»ç­‰*/
+    /*¿ÉÄÜ¶ÓÁĞÒÑÂú£¬·¢²»³öÈ¥£¬µ«ÊÇÕâÀï²»ÄÜ¿¿·µ»ØÖµ½øĞĞÎŞÏŞµÄËÀµÈ*/
     J1939_EnqueueMessage(&_msg, Can_Node);
-    /*ç»“æŸå‘é€*/
+    /*½áÊø·¢ËÍ*/
     TP_RX_MSG.state = J1939_RX_DONE;
 }
 /**
-* @note TPçš„è®¡æ—¶å™¨
+* @note TPµÄ¼ÆÊ±Æ÷
 */
 j1939_uint8_t J1939_TP_TX_RefreshCMTimer(j1939_uint16_t dt_ms)
 {
@@ -1279,7 +1299,7 @@ j1939_uint8_t J1939_TP_TX_RefreshCMTimer(j1939_uint16_t dt_ms)
         }
         else
         {
-            /*è¶…æ—¶ */
+            /*³¬Ê± */
             TP_TX_MSG.time = 0u;
             return J1939_TP_TIMEOUT_ABNORMAL;
         }
@@ -1290,7 +1310,7 @@ j1939_uint8_t J1939_TP_TX_RefreshCMTimer(j1939_uint16_t dt_ms)
     }
 }
 /**
-* @note TPçš„è®¡æ—¶å™¨
+* @note TPµÄ¼ÆÊ±Æ÷
 */
 j1939_uint8_t J1939_TP_RX_RefreshCMTimer(j1939_uint16_t dt_ms)
 {
@@ -1303,7 +1323,7 @@ j1939_uint8_t J1939_TP_RX_RefreshCMTimer(j1939_uint16_t dt_ms)
         }
         else
         {
-            /*è¶…æ—¶ */
+            /*³¬Ê± */
             TP_RX_MSG.time = 0u;
             return J1939_TP_TIMEOUT_ABNORMAL;
         }
@@ -1314,7 +1334,7 @@ j1939_uint8_t J1939_TP_RX_RefreshCMTimer(j1939_uint16_t dt_ms)
     }
 }
 /**
-* @note å‘é€è¯»å–æ•°æ® TP.CM_CTS å’Œ EndofMsgAckæ¶ˆæ¯ã€‚
+* @note ·¢ËÍ¶ÁÈ¡Êı¾İ TP.CM_CTS ºÍ EndofMsgAckÏûÏ¢¡£
 */
 void J1939_read_DT_Packet()
 {
@@ -1328,7 +1348,7 @@ void J1939_read_DT_Packet()
     _msg.Mxe.DestinationAddress = TP_RX_MSG.tp_rx_msg.SA;
     _msg.Mxe.DataLength         = 8;
 
-    /*å¦‚æœç³»ç»Ÿç¹å¿™,ä¿æŒé“¾æ¥ä½†æ˜¯ä¸ä¼ é€æ¶ˆæ¯*/
+    /*Èç¹ûÏµÍ³·±Ã¦,±£³ÖÁ´½Óµ«ÊÇ²»´«ËÍÏûÏ¢*/
     if (TP_RX_MSG.osbusy)
     {
         _msg.Mxe.Data[0] = J1939_CTS_CONTROL_BYTE;
@@ -1339,13 +1359,13 @@ void J1939_read_DT_Packet()
         _msg.Mxe.Data[7] = (j1939_uint8_t)((pgn_num >> 16) & 0xff);
         _msg.Mxe.Data[6] = (j1939_uint8_t)(pgn_num >> 8 & 0xff);
         _msg.Mxe.Data[5] = (j1939_uint8_t)(pgn_num & 0xff);
-        /*å¯èƒ½é˜Ÿåˆ—å·²æ»¡ï¼Œå‘ä¸å‡ºå»ï¼Œä½†æ˜¯è¿™é‡Œä¸èƒ½é è¿”å›å€¼è¿›è¡Œæ— é™çš„æ­»ç­‰*/
+        /*¿ÉÄÜ¶ÓÁĞÒÑÂú£¬·¢²»³öÈ¥£¬µ«ÊÇÕâÀï²»ÄÜ¿¿·µ»ØÖµ½øĞĞÎŞÏŞµÄËÀµÈ*/
         J1939_EnqueueMessage(&_msg, Can_Node);
         return;
     }
     if (TP_RX_MSG.packets_total > TP_RX_MSG.packets_ok_num)
     {
-        /*æœ€åä¸€æ¬¡å“åº”ï¼Œå¦‚æœä¸è¶³2åŒ…æ•°æ®*/
+        /*×îºóÒ»´ÎÏìÓ¦£¬Èç¹û²»×ã2°üÊı¾İ*/
         if ((TP_RX_MSG.packets_total - TP_RX_MSG.packets_ok_num) == 1)
         {
             _msg.Mxe.Data[0] = J1939_CTS_CONTROL_BYTE;
@@ -1356,7 +1376,7 @@ void J1939_read_DT_Packet()
             _msg.Mxe.Data[7] = (j1939_uint8_t)((pgn_num >> 16) & 0xff);
             _msg.Mxe.Data[6] = (j1939_uint8_t)(pgn_num >> 8 & 0xff);
             _msg.Mxe.Data[5] = (j1939_uint8_t)(pgn_num & 0xff);
-            /*å¯èƒ½é˜Ÿåˆ—å·²æ»¡ï¼Œå‘ä¸å‡ºå»ï¼Œä½†æ˜¯è¿™é‡Œä¸èƒ½é è¿”å›å€¼è¿›è¡Œæ— é™çš„æ­»ç­‰*/
+            /*¿ÉÄÜ¶ÓÁĞÒÑÂú£¬·¢²»³öÈ¥£¬µ«ÊÇÕâÀï²»ÄÜ¿¿·µ»ØÖµ½øĞĞÎŞÏŞµÄËÀµÈ*/
             J1939_EnqueueMessage(&_msg, Can_Node);
             TP_RX_MSG.state = J1939_TP_RX_DATA_WAIT;
             return;
@@ -1370,14 +1390,14 @@ void J1939_read_DT_Packet()
         _msg.Mxe.Data[6] = (j1939_uint8_t)(pgn_num >> 8 & 0xff);
         _msg.Mxe.Data[5] = (j1939_uint8_t)(pgn_num & 0xff);
 
-        /*å¯èƒ½é˜Ÿåˆ—å·²æ»¡ï¼Œå‘ä¸å‡ºå»ï¼Œä½†æ˜¯è¿™é‡Œä¸èƒ½é è¿”å›å€¼è¿›è¡Œæ— é™çš„æ­»ç­‰*/
+        /*¿ÉÄÜ¶ÓÁĞÒÑÂú£¬·¢²»³öÈ¥£¬µ«ÊÇÕâÀï²»ÄÜ¿¿·µ»ØÖµ½øĞĞÎŞÏŞµÄËÀµÈ*/
         J1939_EnqueueMessage(&_msg, Can_Node);
         TP_RX_MSG.state = J1939_TP_RX_DATA_WAIT;
         return;
     }
     else
     {
-        /*å‘é€ä¼ è¾“æ­£å¸¸ç»“æŸæ¶ˆæ¯ï¼ŒEndofMsgAck*/
+        /*·¢ËÍ´«ÊäÕı³£½áÊøÏûÏ¢£¬EndofMsgAck*/
         _msg.Mxe.Data[0] = J1939_EOMACK_CONTROL_BYTE;
         _msg.Mxe.Data[1] = (TP_RX_MSG.tp_rx_msg.byte_count & 0x00ff);
         _msg.Mxe.Data[2] = ((TP_RX_MSG.tp_rx_msg.byte_count >> 8) & 0x00ff);
@@ -1386,15 +1406,15 @@ void J1939_read_DT_Packet()
         _msg.Mxe.Data[7] = (j1939_uint8_t)((pgn_num >> 16) & 0xff);
         _msg.Mxe.Data[6] = (j1939_uint8_t)(pgn_num >> 8 & 0xff);
         _msg.Mxe.Data[5] = (j1939_uint8_t)(pgn_num & 0xff);
-        /*å¯èƒ½é˜Ÿåˆ—å·²æ»¡ï¼Œå‘ä¸å‡ºå»ï¼Œä½†æ˜¯è¿™é‡Œä¸èƒ½é è¿”å›å€¼è¿›è¡Œæ— é™çš„æ­»ç­‰*/
+        /*¿ÉÄÜ¶ÓÁĞÒÑÂú£¬·¢²»³öÈ¥£¬µ«ÊÇÕâÀï²»ÄÜ¿¿·µ»ØÖµ½øĞĞÎŞÏŞµÄËÀµÈ*/
         J1939_EnqueueMessage(&_msg, Can_Node);
         TP_RX_MSG.state = J1939_RX_DONE;
         return;
     }
 }
 /**
-* @note TPåè®®çš„å¿ƒè·³ï¼Œä¸ºäº†æ»¡è¶³åœ¨æ€»çº¿çš„è®¡æ—¶å‡†ç¡®ï¼Œ10msè½®è¯¢ä¸€æ¬¡   J1939_TP_TX_RefreshCMTimer(10)\n
-        å¦‚æœæƒ³è¦æ›´é«˜çš„åˆ†è¾¨ç‡ï¼Œ1msè½®è¯¢ä¸€æ¬¡ï¼Œä½†æ˜¯è¦æ”¹ä¸‹é¢è®¡æ—¶å‡½æ•°  J1939_TP_TX_RefreshCMTimer(1)
+* @note TPĞ­ÒéµÄĞÄÌø£¬ÎªÁËÂú×ãÔÚ×ÜÏßµÄ¼ÆÊ±×¼È·£¬10msÂÖÑ¯Ò»´Î   J1939_TP_TX_RefreshCMTimer(10)\n
+        Èç¹ûÏëÒª¸ü¸ßµÄ·Ö±æÂÊ£¬1msÂÖÑ¯Ò»´Î£¬µ«ÊÇÒª¸ÄÏÂÃæ¼ÆÊ±º¯Êı  J1939_TP_TX_RefreshCMTimer(1)
 */
 void J1939_TP_Poll()
 {
@@ -1410,14 +1430,14 @@ void J1939_TP_Poll()
             case J1939_TP_RX_WAIT:;
                 break;
             case J1939_TP_RX_READ_DATA:
-                /*å‘é€è¯»å–æ•°æ® TP.CM_CTS å’Œ EndofMsgAckæ¶ˆæ¯*/
+                /*·¢ËÍ¶ÁÈ¡Êı¾İ TP.CM_CTS ºÍ EndofMsgAckÏûÏ¢*/
                 J1939_read_DT_Packet();
                 break;
             case J1939_TP_RX_DATA_WAIT:
-                /*ç­‰å¾…TP.DTå¸§ä¼ è¾“çš„æ¶ˆæ¯*/
+                /*µÈ´ıTP.DTÖ¡´«ÊäµÄÏûÏ¢*/
                 if (J1939_TP_TIMEOUT_ABNORMAL == J1939_TP_RX_RefreshCMTimer(10))
                 {
-                    /* ç­‰å¾…è¶…æ—¶ï¼Œå‘ç”Ÿè¿æ¥å¼‚å¸¸ï¼Œè·³è½¬åˆ°å¼‚å¸¸æ­¥éª¤ */
+                    /* µÈ´ı³¬Ê±£¬·¢ÉúÁ¬½ÓÒì³££¬Ìø×ªµ½Òì³£²½Öè */
                     TP_RX_MSG.state = J1939_TP_RX_ERROR;
                 }
                 break;
@@ -1443,17 +1463,17 @@ void J1939_TP_Poll()
         switch (TP_TX_MSG.state)
         {
             case J1939_TP_TX_WAIT:
-                /*æ²¡æœ‰è¦å‘é€çš„æ•°æ®*/
+                /*Ã»ÓĞÒª·¢ËÍµÄÊı¾İ*/
                 break;
             case J1939_TP_TX_CM_START:
-                /*å‘é€TP.CM_RTSå¸§ä¼ è¾“çš„æ¶ˆæ¯(å‚è€ƒj1939-21)*/
+                /*·¢ËÍTP.CM_RTSÖ¡´«ÊäµÄÏûÏ¢(²Î¿¼j1939-21)*/
                 J1939_CM_Start();
                 break;
             case J1939_TP_TX_CM_WAIT:
-                /*ç­‰å¾…TP.CM_CTSå¸§ä¼ è¾“çš„æ¶ˆæ¯*/
+                /*µÈ´ıTP.CM_CTSÖ¡´«ÊäµÄÏûÏ¢*/
                 if (J1939_TP_TIMEOUT_ABNORMAL == J1939_TP_TX_RefreshCMTimer(10))
                 {
-                    /* ç­‰å¾…è¶…æ—¶ï¼Œå‘ç”Ÿè¿æ¥å¼‚å¸¸ï¼Œè·³è½¬åˆ°å¼‚å¸¸æ­¥éª¤ */
+                    /* µÈ´ı³¬Ê±£¬·¢ÉúÁ¬½ÓÒì³££¬Ìø×ªµ½Òì³£²½Öè */
                     TP_TX_MSG.state = J1939_TP_TX_ERROR;
                 }
                 break;
@@ -1461,10 +1481,10 @@ void J1939_TP_Poll()
                 J1939_TP_DT_Packet_send();
                 break;
             case J1939_TP_WAIT_ACK:
-                /*ç­‰å¾…TP.EndofMsgACKå¸§ä¼ è¾“çš„æ¶ˆæ¯*/
+                /*µÈ´ıTP.EndofMsgACKÖ¡´«ÊäµÄÏûÏ¢*/
                 if (J1939_TP_TIMEOUT_ABNORMAL == J1939_TP_TX_RefreshCMTimer(10))
                 {
-                    /* ç­‰å¾…è¶…æ—¶ï¼Œå‘ç”Ÿè¿æ¥å¼‚å¸¸ï¼Œè·³è½¬åˆ°å¼‚å¸¸æ­¥éª¤ */
+                    /* µÈ´ı³¬Ê±£¬·¢ÉúÁ¬½ÓÒì³££¬Ìø×ªµ½Òì³£²½Öè */
                     TP_TX_MSG.state = J1939_TP_TX_ERROR;
                 }
                 break;
@@ -1480,28 +1500,28 @@ void J1939_TP_Poll()
                 J1939_TP_Flags_t.state        = J1939_TP_NULL;
                 break;
             default:
-                //ç¨‹åºä¸ä¼šè¿è¡Œåˆ°è¿™é‡Œæ¥ï¼Œå¯ä»¥å¢åŠ ä¸€ä¸ªè°ƒè¯•è¾“å‡º
+                //³ÌĞò²»»áÔËĞĞµ½ÕâÀïÀ´£¬¿ÉÒÔÔö¼ÓÒ»¸öµ÷ÊÔÊä³ö
                 break;
         }
         return;
     }
 }
 
-/**è¿™æ˜¯ä¸€ä¸ªéé˜»å¡ioæ¥å£
+/**ÕâÊÇÒ»¸ö·Ç×èÈûio½Ó¿Ú
 *
-* @param[in] PGN    TPä¼šè¯çš„å‚æ•°ç¾¤ç¼–å·
-* @param[in] SA     TPä¼šè¯çš„ç›®æ ‡åœ°å€
-* @param[in] *data  TPä¼šè¯çš„æ•°æ®ç¼“å­˜åœ°å€
-* @param[in] data_num TPä¼šè¯çš„æ•°æ®å¤§å°
-* @param[in]  _Can_Node  è¦å…¥é˜Ÿçš„CANç¡¬ä»¶ç¼–å·ï¼ˆè¦é€‰æ‹©çš„ä½¿ç”¨çš„CANç¡¬ä»¶ç¼–å·ï¼‰
-* @return    RC_SUCCESS        æˆåŠŸæ‰“å¼€TPé“¾æ¥ï¼Œå¼€å§‹è¿›å…¥å‘é€æµç¨‹
-* @return    RC_CANNOTTRANSMIT ä¸èƒ½å‘é€ï¼Œå› ä¸ºTPåè®®å·²ç»å»ºç«‹è™šæ‹Ÿé“¾æ¥ï¼Œå¹¶ä¸”æœªæ–­å¼€
-* @note      TPåè®®çš„å‘é€å‡½æ•°
+* @param[in] PGN    TP»á»°µÄ²ÎÊıÈº±àºÅ
+* @param[in] SA     TP»á»°µÄÄ¿±êµØÖ·
+* @param[in] *data  TP»á»°µÄÊı¾İ»º´æµØÖ·
+* @param[in] data_num TP»á»°µÄÊı¾İ´óĞ¡
+* @param[in]  _Can_Node  ÒªÈë¶ÓµÄCANÓ²¼ş±àºÅ£¨ÒªÑ¡ÔñµÄÊ¹ÓÃµÄCANÓ²¼ş±àºÅ£©
+* @return    RC_SUCCESS        ³É¹¦´ò¿ªTPÁ´½Ó£¬¿ªÊ¼½øÈë·¢ËÍÁ÷³Ì
+* @return    RC_CANNOTTRANSMIT ²»ÄÜ·¢ËÍ£¬ÒòÎªTPĞ­ÒéÒÑ¾­½¨Á¢ĞéÄâÁ´½Ó£¬²¢ÇÒÎ´¶Ï¿ª
+* @note      TPĞ­ÒéµÄ·¢ËÍº¯Êı
 */
 j1939_int8_t J1939_TP_TX_Message(j1939_uint32_t PGN, j1939_uint8_t DA, j1939_uint8_t *data, j1939_uint16_t data_num, CAN_NODE _Can_Node)
 {
     j1939_uint16_t _byte_count = 0;
-    /*å–å¾—å‘é€æƒé™*/
+    /*È¡µÃ·¢ËÍÈ¨ÏŞ*/
     if (J1939_TP_Flags_t.state == J1939_TP_NULL)
     {
         J1939_TP_Flags_t.state          = J1939_TP_TX;
@@ -1509,7 +1529,7 @@ j1939_int8_t J1939_TP_TX_Message(j1939_uint32_t PGN, j1939_uint8_t DA, j1939_uin
     }
     else
     {
-        return RC_CANNOTTRANSMIT; //ä¸èƒ½å‘é€ï¼Œå› ä¸ºTPåè®®å·²ç»å»ºç«‹è™šæ‹Ÿé“¾æ¥ï¼Œå¹¶ä¸”æœªæ–­å¼€
+        return RC_CANNOTTRANSMIT; //²»ÄÜ·¢ËÍ£¬ÒòÎªTPĞ­ÒéÒÑ¾­½¨Á¢ĞéÄâÁ´½Ó£¬²¢ÇÒÎ´¶Ï¿ª
     }
 
     TP_TX_MSG.tp_tx_msg.PGN        = PGN;
@@ -1527,69 +1547,69 @@ j1939_int8_t J1939_TP_TX_Message(j1939_uint32_t PGN, j1939_uint8_t DA, j1939_uin
         TP_TX_MSG.packets_total++;
     }
     TP_TX_MSG.time = J1939_TP_T3;
-    //è§¦å‘å¼€å§‹CM_START
+    //´¥·¢¿ªÊ¼CM_START
     TP_TX_MSG.state = J1939_TP_TX_CM_START;
 
     return RC_SUCCESS;
 }
 
 /**
-* @param[in]  msg.data       è¯»å–æ•°æ®çš„ç¼“å­˜
-* @param[in]  msg.data_num   è¯»å–æ•°æ®çš„ç¼“å­˜å¤§å°
-* @param[in]  _Can_Node      è¦å…¥é˜Ÿçš„CANç¡¬ä»¶ç¼–å·ï¼ˆè¦é€‰æ‹©çš„ä½¿ç”¨çš„CANç¡¬ä»¶ç¼–å·ï¼‰
-* @param[out] msg.SA         æ•°æ®æºåœ°å€
-* @param[out] msg.byte_count æ•°æ®å¤§å°
-* @param[out] msg.PGN        æ•°æ®å‚æ•°ç¾¤ç¼–å·
-* @return  RC_CANNOTRECEIVE ä¸èƒ½æ¥å—ï¼ŒTPåè®®æ­£åœ¨æ¥å—æ•°æ®ä¸­
-* @return  RC_SUCCESS       è¯»å–æ•°æ®æˆåŠŸ
-* @note TPçš„æ¥å—å‡½æ•° , æ¥å—ç¼“å­˜çš„å¤§å°å¿…é¡»å¤§äºæ¥å—æ•°æ®çš„å¤§å°ï¼Œå»ºè®®åˆå§‹åŒ–ç¼“å­˜å¤§å°ç”¨  J1939_TP_MAX_MESSAGE_LENGTH\n
-        è¯·æ­£ç¡®å¸¦å…¥ ç¼“å­˜åŒºçš„å¤§å°ï¼Œå‚æ•°é”™è¯¯ç¨‹åºè¿è¡Œæœ‰é£é™©
+* @param[in]  msg.data       ¶ÁÈ¡Êı¾İµÄ»º´æ
+* @param[in]  msg.data_num   ¶ÁÈ¡Êı¾İµÄ»º´æ´óĞ¡
+* @param[in]  _Can_Node      ÒªÈë¶ÓµÄCANÓ²¼ş±àºÅ£¨ÒªÑ¡ÔñµÄÊ¹ÓÃµÄCANÓ²¼ş±àºÅ£©
+* @param[out] msg.SA         Êı¾İÔ´µØÖ·
+* @param[out] msg.byte_count Êı¾İ´óĞ¡
+* @param[out] msg.PGN        Êı¾İ²ÎÊıÈº±àºÅ
+* @return  RC_CANNOTRECEIVE ²»ÄÜ½ÓÊÜ£¬TPĞ­ÒéÕıÔÚ½ÓÊÜÊı¾İÖĞ
+* @return  RC_SUCCESS       ¶ÁÈ¡Êı¾İ³É¹¦
+* @note TPµÄ½ÓÊÜº¯Êı , ½ÓÊÜ»º´æµÄ´óĞ¡±ØĞë´óÓÚ½ÓÊÜÊı¾İµÄ´óĞ¡£¬½¨Òé³õÊ¼»¯»º´æ´óĞ¡ÓÃ  J1939_TP_MAX_MESSAGE_LENGTH\n
+        ÇëÕıÈ·´øÈë »º´æÇøµÄ´óĞ¡£¬²ÎÊı´íÎó³ÌĞòÔËĞĞÓĞ·çÏÕ
 */
 j1939_int8_t J1939_TP_RX_Message(TP_RX_MESSAGE *msg, CAN_NODE _Can_Node)
 {
     j1939_uint16_t _a = 0;
-    /*åˆ¤æ–­æ˜¯å¦èƒ½è¯»å–æ•°æ®*/
+    /*ÅĞ¶ÏÊÇ·ñÄÜ¶ÁÈ¡Êı¾İ*/
     if (J1939_TP_Flags_t.state == J1939_TP_NULL && TP_RX_MSG.tp_rx_msg.PGN != 0)
     {
         J1939_TP_Flags_t.state = J1939_TP_OSBUSY;
     }
     else
     {
-        return RC_CANNOTRECEIVE; //ä¸èƒ½æ¥å—ï¼ŒTPåè®®æ­£åœ¨æ¥å—æ•°æ®ä¸­,æˆ–æ²¡æœ‰æ•°æ®
+        return RC_CANNOTRECEIVE; //²»ÄÜ½ÓÊÜ£¬TPĞ­ÒéÕıÔÚ½ÓÊÜÊı¾İÖĞ,»òÃ»ÓĞÊı¾İ
     }
-    //åˆ¤æ–­æ˜¯ä¸æ˜¯è¦è¯»å–é‚£ä¸€è·¯CANæ•°æ®
+    //ÅĞ¶ÏÊÇ²»ÊÇÒª¶ÁÈ¡ÄÇÒ»Â·CANÊı¾İ
     if (_Can_Node != J1939_TP_Flags_t.TP_RX_CAN_NODE)
     {
-        /*é‡Šæ”¾TPæ¥ç®¡æƒé™*/
+        /*ÊÍ·ÅTP½Ó¹ÜÈ¨ÏŞ*/
         if (J1939_TP_Flags_t.state == J1939_TP_OSBUSY)
         {
             J1939_TP_Flags_t.state = J1939_TP_NULL;
         }
         return RC_CANNOTRECEIVE;
     }
-    //åˆ¤æ–­æ•°æ®ç¼“å­˜å¤Ÿä¸å¤Ÿ
+    //ÅĞ¶ÏÊı¾İ»º´æ¹»²»¹»
     if ((msg->data_num) < TP_RX_MSG.tp_rx_msg.byte_count)
     {
-        return RC_CANNOTRECEIVE; //ä¸èƒ½æ¥å—ï¼Œç¼“å­˜åŒºå¤ªå°
+        return RC_CANNOTRECEIVE; //²»ÄÜ½ÓÊÜ£¬»º´æÇøÌ«Ğ¡
     }
 
-    /*è·å–æ•°æ®*/
+    /*»ñÈ¡Êı¾İ*/
     for (_a = 0; _a < msg->data_num; _a++)
     {
         msg->data[_a] = TP_RX_MSG.tp_rx_msg.data[_a];
     }
-    /*è·å–æ•°æ® æºåœ°å€*/
+    /*»ñÈ¡Êı¾İ Ô´µØÖ·*/
     msg->SA = TP_RX_MSG.tp_rx_msg.SA;
-    /*è·å–æ•°æ®çš„å¤§å°*/
+    /*»ñÈ¡Êı¾İµÄ´óĞ¡*/
     msg->byte_count = TP_RX_MSG.tp_rx_msg.byte_count;
-    /*è·å–æ•°æ®PGN*/
+    /*»ñÈ¡Êı¾İPGN*/
     msg->PGN = TP_RX_MSG.tp_rx_msg.PGN;
 
-    /*ä¸¢å¼ƒè¯»å–è¿‡çš„æ•°æ®*/
+    /*¶ªÆú¶ÁÈ¡¹ıµÄÊı¾İ*/
     TP_RX_MSG.tp_rx_msg.byte_count = 0u;
     TP_RX_MSG.tp_rx_msg.PGN        = 0;
 
-    /*é‡Šæ”¾TPæ¥ç®¡æƒé™*/
+    /*ÊÍ·ÅTP½Ó¹ÜÈ¨ÏŞ*/
     if (J1939_TP_Flags_t.state == J1939_TP_OSBUSY)
     {
         J1939_TP_Flags_t.state = J1939_TP_NULL;
@@ -1598,10 +1618,10 @@ j1939_int8_t J1939_TP_RX_Message(TP_RX_MESSAGE *msg, CAN_NODE _Can_Node)
     return RC_SUCCESS;
 }
 /**
-* @param[in] pgn  è¢«è¯·æ±‚çš„å‚æ•°ç¾¤
-* @param[in] DA   ç›®æ ‡åœ°å€ï¼ˆDestinationAddressï¼‰ å½“DA = 0xffè¡¨ç¤ºæ˜¯å…¨å±€è¯·æ±‚
-* @param[in] _Can_Node  è¦å…¥é˜Ÿçš„CANç¡¬ä»¶ç¼–å·ï¼ˆè¦é€‰æ‹©çš„ä½¿ç”¨çš„CANç¡¬ä»¶ç¼–å·ï¼‰
-* @note      è¯·æ±‚ï¼ˆä»å…¨å±€èŒƒå›´æˆ–åˆ™ç‰¹å®šç›®çš„åœ°çš„ï¼‰å‚æ•°ç¾¤ï¼Œè¯·æ±‚è§„åˆ™J1939-21çš„16-17é¡µï¼Œæœ‰æ˜ç¡®çš„è¯´æ˜
+* @param[in] pgn  ±»ÇëÇóµÄ²ÎÊıÈº
+* @param[in] DA   Ä¿±êµØÖ·£¨DestinationAddress£© µ±DA = 0xff±íÊ¾ÊÇÈ«¾ÖÇëÇó
+* @param[in] _Can_Node  ÒªÈë¶ÓµÄCANÓ²¼ş±àºÅ£¨ÒªÑ¡ÔñµÄÊ¹ÓÃµÄCANÓ²¼ş±àºÅ£©
+* @note      ÇëÇó£¨´ÓÈ«¾Ö·¶Î§»òÔòÌØ¶¨Ä¿µÄµØµÄ£©²ÎÊıÈº£¬ÇëÇó¹æÔòJ1939-21µÄ16-17Ò³£¬ÓĞÃ÷È·µÄËµÃ÷
 */
 void J1939_Request_PGN(j1939_uint32_t pgn, j1939_uint8_t DA, CAN_NODE _Can_Node)
 {
@@ -1620,17 +1640,17 @@ void J1939_Request_PGN(j1939_uint32_t pgn, j1939_uint8_t DA, CAN_NODE _Can_Node)
         ;
 }
 /**
-* @param[in]  data        éœ€è¦å‘é€æ•°æ®çš„ç¼“å­˜
-* @param[in]  dataLenght  å‘é€æ•°æ®çš„ç¼“å­˜å¤§å°
-* @param[in]  PGN         éœ€è¦å‘é€æ•°æ®çš„PGN(å‚æ•°ç¾¤ç¼–å·)
-* @param[in]  void (*dataUPFun)()  ç”¨äºæ›´æ–°ç¼“å­˜data çš„å‡½æ•°åœ°å€æŒ‡é’ˆ
-* @param[in]  _Can_Node      è¦å…¥é˜Ÿçš„CANç¡¬ä»¶ç¼–å·ï¼ˆè¦é€‰æ‹©çš„ä½¿ç”¨çš„CANç¡¬ä»¶ç¼–å·ï¼‰
-* @note åˆ›å»ºä¸€ä¸ªPGN çš„ è¯·æ±‚ å¯¹åº”çš„ å“åº”\n å¦‚æœæ”¶åˆ°æ”¹è¯·æ±‚åˆ™å…ˆè¿è¡Œ REQUEST_LIST.dataUPFun(),åœ¨å°†æ•°æ®REQUEST_LIST.dataå‘é€å‡ºå»
-* @warning  æœ¬å‡½æ•°åªèƒ½è¢«ä¸²è¡Œè°ƒç”¨ï¼Œï¼ˆå¤šçº¿ç¨‹ï¼‰å¹¶è¡Œè°ƒç”¨è¯·åœ¨å‡½æ•°å¤–åŠ äº’æ–¥æ“ä½œ
+* @param[in]  data        ĞèÒª·¢ËÍÊı¾İµÄ»º´æ
+* @param[in]  dataLenght  ·¢ËÍÊı¾İµÄ»º´æ´óĞ¡
+* @param[in]  PGN         ĞèÒª·¢ËÍÊı¾İµÄPGN(²ÎÊıÈº±àºÅ)
+* @param[in]  void (*dataUPFun)()  ÓÃÓÚ¸üĞÂ»º´ædata µÄº¯ÊıµØÖ·Ö¸Õë
+* @param[in]  _Can_Node      ÒªÈë¶ÓµÄCANÓ²¼ş±àºÅ£¨ÒªÑ¡ÔñµÄÊ¹ÓÃµÄCANÓ²¼ş±àºÅ£©
+* @note ´´½¨Ò»¸öPGN µÄ ÇëÇó ¶ÔÓ¦µÄ ÏìÓ¦\n Èç¹ûÊÕµ½¸ÄÇëÇóÔòÏÈÔËĞĞ REQUEST_LIST.dataUPFun(),ÔÚ½«Êı¾İREQUEST_LIST.data·¢ËÍ³öÈ¥
+* @warning  ±¾º¯ÊıÖ»ÄÜ±»´®ĞĞµ÷ÓÃ£¬£¨¶àÏß³Ì£©²¢ĞĞµ÷ÓÃÇëÔÚº¯ÊıÍâ¼Ó»¥³â²Ù×÷
 */
 void J1939_Create_Response(j1939_uint8_t data[], j1939_uint16_t dataLenght, j1939_uint32_t PGN, void (*dataUPFun)(), CAN_NODE _Can_Node)
 {
-    /*æŸ¥æ‰¾å¯ç”¨çš„é“¾è¡¨é¡¹*/
+    /*²éÕÒ¿ÉÓÃµÄÁ´±íÏî*/
     struct Request_List *_requestList = &REQUEST_LIST;
     while (J1939_NULL != _requestList->next)
     {
@@ -1639,7 +1659,7 @@ void J1939_Create_Response(j1939_uint8_t data[], j1939_uint16_t dataLenght, j193
     _requestList->next = (struct Request_List *)malloc(sizeof(struct Request_List));
     _requestList       = _requestList->next;
 
-    /*å¯¹æ–°çš„é“¾è¡¨é¡¹èµ‹å€¼*/
+    /*¶ÔĞÂµÄÁ´±íÏî¸³Öµ*/
     _requestList->data     = data;
     _requestList->lenght   = dataLenght;
     _requestList->PGN      = PGN;
@@ -1648,20 +1668,21 @@ void J1939_Create_Response(j1939_uint8_t data[], j1939_uint16_t dataLenght, j193
     _requestList->next     = J1939_NULL;
 }
 /**
-* @note å½“æ”¶åˆ°ä¸€ä¸ªPGNè¯·æ±‚åï¼Œå¦‚æœæœ‰REQUEST_LISTä¸­æœ‰ç›¸åº”çš„PGNï¼Œåˆ™ä¼šè‡ªåŠ¨å‘é€REQUEST_LISTä¸­çš„PGNã€‚\n
-  å¦‚æœæ²¡æœ‰åˆ™ä¼šå‘é€ä¸€ä¸ªNACK; æœ¬å‡½æ•°çš„å“åº”é€»è¾‘ï¼Œå‚è€ƒJ1939-21 17é¡µè¡¨4
+* @note µ±ÊÕµ½Ò»¸öPGNÇëÇóºó£¬Èç¹ûÓĞREQUEST_LISTÖĞÓĞÏàÓ¦µÄPGN£¬Ôò»á×Ô¶¯·¢ËÍREQUEST_LISTÖĞµÄPGN¡£\n
+  Èç¹ûÃ»ÓĞÔò»á·¢ËÍÒ»¸öNACK; ±¾º¯ÊıµÄÏìÓ¦Âß¼­£¬²Î¿¼J1939-21 17Ò³±í4
 */
 void J1939_Response(const j1939_uint32_t PGN)
 {
     J1939_MESSAGE _msg;
+    j1939_int8_t  ret;
 
-    /*æŸ¥æ‰¾å¯ç”¨çš„é“¾è¡¨é¡¹*/
+    /*²éÕÒ¿ÉÓÃµÄÁ´±íÏî*/
     struct Request_List *_requestList = &REQUEST_LIST;
     while ((PGN != _requestList->PGN) || (Can_Node != _requestList->Can_Node))
     {
         if (_requestList->next == J1939_NULL)
         {
-            /*åŸæ–‡æ¡£è§„å®š å…¨å±€è¯·æ±‚ä¸è¢«æ”¯æŒæ—¶ä¸èƒ½å“åº” NACK*/
+            /*Ô­ÎÄµµ¹æ¶¨ È«¾ÖÇëÇó²»±»Ö§³ÖÊ±²»ÄÜÏìÓ¦ NACK*/
             if (OneMessage.Mxe.PDUSpecific == J1939_GLOBAL_ADDRESS)
             {
                 return;
@@ -1671,7 +1692,7 @@ void J1939_Response(const j1939_uint32_t PGN)
                 return;
             }
 
-            /*æ²¡æœ‰ç›¸åº”çš„PGNå“åº”è¢«åˆ›å»ºï¼Œå‘æ€»çº¿å‘é€ä¸€ä¸ªNACK*/
+            /*Ã»ÓĞÏàÓ¦µÄPGNÏìÓ¦±»´´½¨£¬Ïò×ÜÏß·¢ËÍÒ»¸öNACK*/
             _msg.Mxe.Priority           = J1939_ACK_PRIORITY;
             _msg.Mxe.DataPage           = 0;
             _msg.Mxe.PDUFormat          = J1939_PF_ACKNOWLEDGMENT;
@@ -1696,25 +1717,27 @@ void J1939_Response(const j1939_uint32_t PGN)
         }
     }
 
-    /*è°ƒç”¨dataUPFunï¼ˆï¼‰å‡½æ•°ï¼Œä¸»è¦ç”¨äºå‚æ•°ç¾¤æ•°æ®æ›´æ–°*/
+    /*µ÷ÓÃdataUPFun£¨£©º¯Êı£¬Ö÷ÒªÓÃÓÚ²ÎÊıÈºÊı¾İ¸üĞÂ*/
     if (J1939_NULL != _requestList->update)
     {
         _requestList->update();
     }
 
-    /*å“åº”è¯·æ±‚*/
+    /*ÏìÓ¦ÇëÇó*/
     if (_requestList->lenght > 8)
     {
-        /*å›ä¸€ä¸ªç¡®è®¤å“åº”å¤šå¸§(éå¹¿æ’­å¤šå¸§)*/
+        /*»ØÒ»¸öÈ·ÈÏÏìÓ¦¶àÖ¡(·Ç¹ã²¥¶àÖ¡)*/
+
+#if 0 // Yangwb:Ô­´úÂë
         if (RC_SUCCESS != J1939_TP_TX_Message(_requestList->PGN, OneMessage.Mxe.SourceAddress, _requestList->data, _requestList->lenght, Can_Node))
         {
-            /*åŸæ–‡æ¡£è§„å®š å…¨å±€è¯·æ±‚ä¸è¢«æ”¯æŒæ—¶ä¸èƒ½å“åº” NACK*/
+            /*Ô­ÎÄµµ¹æ¶¨ È«¾ÖÇëÇó²»±»Ö§³ÖÊ±²»ÄÜÏìÓ¦ NACK*/
             if (OneMessage.Mxe.PDUSpecific == J1939_GLOBAL_ADDRESS)
             {
                 return;
             }
 
-            /*å¦‚æœé•¿å¸§å‘é€ä¸æˆåŠŸ*/
+            /*Èç¹û³¤Ö¡·¢ËÍ²»³É¹¦*/
             _msg.Mxe.Priority           = J1939_ACK_PRIORITY;
             _msg.Mxe.DataPage           = 0;
             _msg.Mxe.PDUFormat          = J1939_PF_ACKNOWLEDGMENT;
@@ -1734,11 +1757,50 @@ void J1939_Response(const j1939_uint32_t PGN)
             return;
         }
 
-        /*å›ä¸€ä¸ªç¡®è®¤å“åº”*/
+#else // Yangwb:¸ÄĞ´µÄ´úÂë
+        if (OneMessage.Mxe.PDUSpecific == J1939_GLOBAL_ADDRESS) // BAM
+        {
+            ret = J1939_TP_TX_Message(_requestList->PGN, J1939_GLOBAL_ADDRESS, _requestList->data, _requestList->lenght, Can_Node);
+        }
+        else
+        {
+            ret = J1939_TP_TX_Message(_requestList->PGN, OneMessage.Mxe.SourceAddress, _requestList->data, _requestList->lenght, Can_Node);
+        }
+
+        if (RC_SUCCESS != ret)
+        {
+            /*Ô­ÎÄµµ¹æ¶¨ È«¾ÖÇëÇó²»±»Ö§³ÖÊ±²»ÄÜÏìÓ¦ NACK*/
+            if (OneMessage.Mxe.PDUSpecific == J1939_GLOBAL_ADDRESS)
+            {
+                return;
+            }
+
+            /*Èç¹û³¤Ö¡·¢ËÍ²»³É¹¦*/
+            _msg.Mxe.Priority           = J1939_ACK_PRIORITY;
+            _msg.Mxe.DataPage           = 0;
+            _msg.Mxe.PDUFormat          = J1939_PF_ACKNOWLEDGMENT;
+            _msg.Mxe.DestinationAddress = OneMessage.Mxe.SourceAddress;
+            _msg.Mxe.DataLength         = 8;
+            _msg.Mxe.SourceAddress      = J1939_Address;
+            _msg.Mxe.Data[0]            = J1939_ACCESS_DENIED_CONTROL_BYTE;
+            _msg.Mxe.Data[1]            = 0xFF;
+            _msg.Mxe.Data[2]            = 0xFF;
+            _msg.Mxe.Data[3]            = 0xFF;
+            _msg.Mxe.Data[4]            = 0xFF;
+            _msg.Mxe.Data[5]            = (PGN & 0x0000FF);
+            _msg.Mxe.Data[6]            = ((PGN >> 8) & 0x0000FF);
+            _msg.Mxe.Data[7]            = ((PGN >> 16) & 0x0000FF);
+
+            SendOneMessage((J1939_MESSAGE *)&_msg);
+            return;
+        }
+#endif
+
+        /*»ØÒ»¸öÈ·ÈÏÏìÓ¦*/
         _msg.Mxe.Priority  = J1939_ACK_PRIORITY;
         _msg.Mxe.DataPage  = 0;
         _msg.Mxe.PDUFormat = J1939_PF_ACKNOWLEDGMENT;
-        /*åŸæ–‡æ¡£è§„å®š å…¨å±€è¯·æ±‚å“åº”åˆ°å…¨å±€*/
+        /*Ô­ÎÄµµ¹æ¶¨ È«¾ÖÇëÇóÏìÓ¦µ½È«¾Ö*/
         if (OneMessage.Mxe.PDUSpecific == J1939_GLOBAL_ADDRESS)
         {
             _msg.Mxe.DestinationAddress = 0XFF;
@@ -1761,12 +1823,12 @@ void J1939_Response(const j1939_uint32_t PGN)
     }
     else
     {
-        /*å›ä¸€ä¸ªç¡®è®¤å“åº”*/
+        /*»ØÒ»¸öÈ·ÈÏÏìÓ¦*/
         _msg.Mxe.Priority      = J1939_ACK_PRIORITY;
         _msg.Mxe.DataPage      = 0;
         _msg.Mxe.PDUFormat     = J1939_PF_ACKNOWLEDGMENT;
         _msg.Mxe.SourceAddress = J1939_Address;
-        /*åŸæ–‡æ¡£è§„å®š å…¨å±€è¯·æ±‚å“åº”åˆ°å…¨å±€*/
+        /*Ô­ÎÄµµ¹æ¶¨ È«¾ÖÇëÇóÏìÓ¦µ½È«¾Ö*/
         if ((OneMessage.Mxe.PDUSpecific == J1939_GLOBAL_ADDRESS) || ((PGN & 0xFF00) >= 0xF000))
         {
             _msg.Mxe.DestinationAddress = 0XFF;
@@ -1787,12 +1849,13 @@ void J1939_Response(const j1939_uint32_t PGN)
         _msg.Mxe.Data[7]       = ((PGN >> 16) & 0x0000FF);
         SendOneMessage((J1939_MESSAGE *)&_msg);
 
-        /*å›ä¸€ä¸ªç¡®è®¤å“åº”å•å¸§*/
+#if 0 // Ô­´úÂë
+        /*»ØÒ»¸öÈ·ÈÏÏìÓ¦µ¥Ö¡*/
         _msg.Mxe.Priority      = J1939_ACK_PRIORITY;
         _msg.Mxe.DataPage      = (((_requestList->PGN) >> 16) & 0x1);
         _msg.Mxe.PDUFormat     = ((_requestList->PGN) >> 8) & 0xFF;
         _msg.Mxe.SourceAddress = J1939_Address;
-        /*åŸæ–‡æ¡£è§„å®š å…¨å±€è¯·æ±‚å“åº”åˆ°å…¨å±€*/
+        /*Ô­ÎÄµµ¹æ¶¨ È«¾ÖÇëÇóÏìÓ¦µ½È«¾Ö*/
         if (OneMessage.Mxe.PDUSpecific == J1939_GLOBAL_ADDRESS)
         {
             _msg.Mxe.DestinationAddress = 0XFF;
@@ -1801,6 +1864,14 @@ void J1939_Response(const j1939_uint32_t PGN)
         {
             _msg.Mxe.DestinationAddress = OneMessage.Mxe.SourceAddress;
         }
+
+#else // Yangwb:¸ÄĞ´µÄ´úÂë
+        _msg.Mxe.Priority      = J1939_ACK_PRIORITY;
+        _msg.Mxe.DataPage      = (((_requestList->PGN) >> 16) & 0x1);
+        _msg.Mxe.PDUFormat     = ((_requestList->PGN) >> 8) & 0xFF;
+        _msg.Mxe.PDUSpecific   = (INT8U)(_requestList->PGN);
+        _msg.Mxe.SourceAddress = J1939_Address;
+#endif
         _msg.Mxe.DataLength = _requestList->lenght;
         {
             j1939_uint8_t _i = 0;
