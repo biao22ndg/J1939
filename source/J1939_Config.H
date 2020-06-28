@@ -1,72 +1,78 @@
-﻿/*********************************************************************
+/*********************************************************************
  *
  *            J1939 Main Source Code
  *
  *********************************************************************
  *
- *  本程序是由XieTongXueFlyMe对现有的J1939协议文档分析，和对前辈的贡献总结,
- * 写出的一套开源的J1939驱动。
- *  本协议特点：
- *      1.易移植（不针对特定的CAN硬件，只要满足CAN2.0B即可）
- *      2.轻量级（可适应低端的MCU）
- *      3.支持多任务调用接口（可用于嵌入式系统）
- *      4.双模式（轮询或者中断，逻辑更加简单明了）
- *      5.不掉帧（数据采用收发列队缓存）
+ *  ����������XieTongXueFlyMe�����е�J1939Э���ĵ��������Ͷ�ǰ���Ĺ����ܽ�,
+ * д����һ�׿�Դ��J1939������
+ *  ��Э���ص㣺
+ *      1.����ֲ��������ض���CANӲ����ֻҪ����CAN2.0B���ɣ�
+ *      2.������������Ӧ�Ͷ˵�MCU��
+ *      3.֧�ֶ�������ýӿڣ�������Ƕ��ʽϵͳ��
+ *      4.˫ģʽ����ѯ�����жϣ��߼����Ӽ����ˣ�
+ *      5.����֡�����ݲ����շ��жӻ��棩
  *
- *  源代码下载：
+ *  Դ�������أ�
  *      https://github.com/XeiTongXueFlyMe/J1939
- *  源代码临时手册Web站点：
+ *  Դ������ʱ�ֲ�Webվ�㣺
  *      https://xeitongxueflyme.github.io/j1939doc.github.io/
  *
  * Version     Date        Description
  * -------------------------------------------------------------------
- * v1.0.0     2017/06/04    首个版本 Version 1 测试版发布
- * v1.0.1     2017/08/04    完善功能
- * v1.1.0     2017/11/22    Version 1 稳定发布版
- * v2.0.1     2017/11/24    Version 2 测试版发布
- * v2.0.2     2018/01/03    解决V2.0.1 遗留问题
- * v2.1.0     2018/01/20    Version 2 稳定发布版
+ * v1.0.0     2017/06/04    �׸��汾 Version 1 ���԰淢��
+ * v1.0.1     2017/08/04    ���ƹ���
+ * v1.1.0     2017/11/22    Version 1 �ȶ�������
+ * v2.0.1     2017/11/24    Version 2 ���԰淢��
+ * v2.0.2     2018/01/03    ���V2.0.1 ��������
+ * v2.1.0     2018/01/20    Version 2 �ȶ�������
  * Author               Date         changes
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *XeiTongXueFlyMe       7/06/04      首个版本
- *XeiTongXueFlyMe       7/08/04      增加对TP的支持
- *XeiTongXueFlyMe       7/11/24      增加对多路CAN硬件的收发，和报文处理
- *XeiTongXueFlyMe       7/11/29      增加请求和响应API
- *XeiTongXueFlyMe       7/12/07      重做TP接受API函数
- *XeiTongXueFlyMe       7/12/08      增加软件滤波器
- *XeiTongXueFlyMe       8/01/03      重做接受发送API，简化协议栈初始化调用逻辑
+ *XeiTongXueFlyMe       7/06/04      �׸��汾
+ *XeiTongXueFlyMe       7/08/04      ���Ӷ�TP��֧��
+ *XeiTongXueFlyMe       7/11/24      ���ӶԶ�·CANӲ�����շ����ͱ��Ĵ���
+ *XeiTongXueFlyMe       7/11/29      �����������ӦAPI
+ *XeiTongXueFlyMe       7/12/07      ����TP����API����
+ *XeiTongXueFlyMe       7/12/08      ���������˲���
+ *XeiTongXueFlyMe       8/01/03      �������ܷ���API����Э��ջ��ʼ�������߼�
  **********************************************************************/
 
 #ifndef __J1939_Config_H
 #define __J1939_Config_H
 
-#include "J1939.H"
-extern CAN_NODE Can_Node; //CAN硬件选择
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
 
-/***************************J1939 地址配置*****************************/
-//设备默认的地址（地址命名是有规定的，参考J1939的附录B 地址和标识符的分配）
+#include "DrvCanPhy.h"
+#include "J1939.H"
+
+extern CAN_NODE Can_Node; //CANӲ��ѡ��
+
+/***************************J1939 ��ַ����*****************************/
+//�豸Ĭ�ϵĵ�ַ����ַ�������й涨�ģ��ο�J1939�ĸ�¼B ��ַ�ͱ�ʶ���ķ��䣩
 #define J1939_STARTING_ADDRESS_1 0x01
 #define J1939_STARTING_ADDRESS_2 244
 #define J1939_STARTING_ADDRESS_3 247
 #define J1939_STARTING_ADDRESS_4 0
 
-/******************************J1939功能配置***************************/
+/******************************J1939��������***************************/
 #define J1939_RX_QUEUE_SIZE 3
-//当mcu来不及处理消息，接收消息列队是否允许被新的消息覆盖
+//��mcu������������Ϣ��������Ϣ�ж��Ƿ��������µ���Ϣ����
 #define J1939_OVERWRITE_RX_QUEUE J1939_FALSE
 #define J1939_TX_QUEUE_SIZE      3
-//当mcu来不及处理消息，发送消息列队是否允许被新的消息覆盖
+//��mcu������������Ϣ��������Ϣ�ж��Ƿ��������µ���Ϣ����
 #define J1939_OVERWRITE_TX_QUEUE J1939_FALSE
-//是否使用轮询模式（否则使用中断模式）
+//�Ƿ�ʹ����ѯģʽ������ʹ���ж�ģʽ��
 #define J1939_POLL_ECAN J1939_TRUE
-//是否启用软件滤波器
+//�Ƿ����������˲���
 #define J1939SoftwareFilterEn J1939_TRUE
-/******************************J1939移植配置函数************************/
+/******************************J1939��ֲ���ú���************************/
 
 #define Port_CAN_Transmit(MsgPtr)      J1939_CAN_Transmit(MsgPtr)
 #define Port_CAN_Receive(MsgPtr)       J1939_CAN_Receive(MsgPtr)
 #define Port_SetAddressFilter(Address) J1939_SetAddressFilter(Address)
-/*不使用中断模式，不对下面的函数进行移植*/
+/*��ʹ���ж�ģʽ����������ĺ���������ֲ*/
 #if J1939_POLL_ECAN == J1939_FALSE
 #define Port_RXinterruptEnable()  J1939_RXinterruptEnable()
 #define Port_RXinterruptDisable() J1939_RXinterruptDisable()
@@ -79,16 +85,16 @@ extern CAN_NODE Can_Node; //CAN硬件选择
 /***************************************************************************************/
 
 /*
-*输入：
-*输出：
-*说明：基于SAE J1939协议，我们需要CAN控制器提供至少3个滤波器给J1939协议代码。三个滤波器分别配置如下：
-        1. 设置滤波器0，只接受广播信息（PF = 240 -255）。
-        2. 设置设置滤波器1，2只接受全局地址（J1939_GLOBAL_ADDRESS）
-        3. 随着程序的运行，将改变滤波器2，来适应程序逻辑。
-    J1939_SetAddressFilter() 是用来设置滤波器2的， 函数主要设置PS位（目标地址），其目的是，让控制器
-    只接受发送给本设备的消息。
-*警告： 滤波器0，1是在CAN驱动里配置，如果对硬件滤波配置不是很熟练，可以使能软件滤波器，#define J1939SoftwareFilterEn
-*则可跳过本函数的移植和CAN硬件滤波器的配置，为了J1939协议栈性能最优化，建议只是用硬件滤波。
+*���룺
+*�����
+*˵��������SAE J1939Э�飬������ҪCAN�������ṩ����3���˲�����J1939Э����롣�����˲����ֱ��������£�
+        1. �����˲���0��ֻ���ܹ㲥��Ϣ��PF = 240 -255����
+        2. ���������˲���1��2ֻ����ȫ�ֵ�ַ��J1939_GLOBAL_ADDRESS��
+        3. ���ų�������У����ı��˲���2������Ӧ�����߼���
+    J1939_SetAddressFilter() �����������˲���2�ģ� ������Ҫ����PSλ��Ŀ���ַ������Ŀ���ǣ��ÿ�����
+    ֻ���ܷ��͸����豸����Ϣ��
+*���棺 �˲���0��1����CAN���������ã������Ӳ���˲����ò��Ǻ�����������ʹ�������˲�����#define J1939SoftwareFilterEn
+*�����������������ֲ��CANӲ���˲��������ã�Ϊ��J1939Э��ջ�������Ż�������ֻ����Ӳ���˲���
 */
 void J1939_SetAddressFilter(unsigned char Ps_Address)
 {
@@ -118,68 +124,71 @@ void J1939_SetAddressFilter(unsigned char Ps_Address)
 }
 
 /*
-*输入：  *MsgPtr ，协议要发送的消息，
-*输出：
-*说明：      将数据 从MsgPtr结构体赋值到CAN驱动自带的结构体中
-        先将传入函数的MsgPtr中的数据写到CAN的结构体，再调用CAN驱动的发送函数
-        默认支持4路CAN硬件的收发。如少于4路，只需配置相应的Can_Node开关代码区，
-        其他（Select_CAN_NODE）保持不变。就直接返回（break）。
+*���룺  *MsgPtr ��Э��Ҫ���͵���Ϣ��
+*�����
+*˵����      ������ ��MsgPtr�ṹ�帳ֵ��CAN�����Դ��Ľṹ����
+        �Ƚ����뺯����MsgPtr�е�����д��CAN�Ľṹ�壬�ٵ���CAN�����ķ��ͺ���
+        Ĭ��֧��4·CANӲ�����շ���������4·��ֻ��������Ӧ��Can_Node���ش�������
+        ������Select_CAN_NODE�����ֲ��䡣��ֱ�ӷ��أ�break����
 */
 void J1939_CAN_Transmit(J1939_MESSAGE *MsgPtr)
 {
+    j1939_uint32_t id;
     switch (Can_Node)
     {
         case Select_CAN_NODE_1:
         {
-            /*加载第一路CAN硬件的29位ID*/
+            id = (MsgPtr->Array[0] << 24) + (MsgPtr->Array[1] << 16) + (MsgPtr->Array[2] << 8) + MsgPtr->Array[3];
+            DrvCanPhy_SendWithExtIdDataAtCan1(MsgPtr->Mxe.Data, id, 8);
+            /*���ص�һ·CANӲ����29λID*/
 
-            /*CAN硬件加载数据长度*/
+            /*CANӲ���������ݳ���*/
 
-            /*CAN硬件加载数据*/
+            /*CANӲ����������*/
 
-            /*CAN硬件加载RTR*/
+            /*CANӲ������RTR*/
 
-            //CAN硬件开始发送数据
+            //CANӲ����ʼ��������
 
             break;
         }
         case Select_CAN_NODE_2:
         {
-            /*加载第二路CAN硬件的29位ID*/
+            /*���صڶ�·CANӲ����29λID*/
 
-            /*CAN硬件加载数据长度*/
+            /*CANӲ���������ݳ���*/
 
-            /*CAN硬件加载数据*/
+            /*CANӲ����������*/
 
-            /*CAN硬件加载RTR*/
+            /*CANӲ������RTR*/
 
-            //CAN硬件开始发送数据
+            //CANӲ����ʼ��������
             break;
         }
         case Select_CAN_NODE_3:
         {
-            /*加载第三路CAN硬件的29位ID*/
+            /*���ص���·CANӲ����29λID*/
 
-            /*CAN硬件加载数据长度*/
+            /*CANӲ���������ݳ���*/
 
-            /*CAN硬件加载数据*/
+            /*CANӲ����������*/
 
-            /*CAN硬件加载RTR*/
+            /*CANӲ������RTR*/
 
-            //CAN硬件开始发送数据
+            //CANӲ����ʼ��������
             break;
         }
         case Select_CAN_NODE_4:
         {
-            /*加载第四路CAN硬件的29位ID*/
+            /*���ص���·CANӲ����29λID*/
 
-            /*CAN硬件加载数据长度*/
+            /*CANӲ���������ݳ���*/
 
-            /*CAN硬件加载数据*/
+            /*CANӲ����������*/
 
-            /*CAN硬件加载RTR*/
+            /*CANӲ������RTR*/
 
-            //CAN硬件开始发送数据
+            //CANӲ����ʼ��������
             break;
         }
         default:
@@ -188,13 +197,29 @@ void J1939_CAN_Transmit(J1939_MESSAGE *MsgPtr)
         }
     }
 }
+
+static volatile J1939_MESSAGE s_can_rx_buf;
+static volatile bool          s_can_rx_ok = false;
+
+void j1939_can_rx_irq(uint32_t id, uint8_t id_typ, uint8_t len, uint8_t *dat_p)
+{
+    s_can_rx_buf.Array[0]       = id >> (8 * 3);
+    s_can_rx_buf.Array[1]       = id >> (8 * 2);
+    s_can_rx_buf.Array[2]       = id >> (8 * 1);
+    s_can_rx_buf.Array[3]       = id >> (8 * 0);
+    s_can_rx_buf.Mxe.DataLength = len;
+    memcpy(s_can_rx_buf.Mxe.Data, dat_p, 8);
+
+    s_can_rx_ok = true;
+}
+
 /*
-*输入：     *MsgPtr 数据要存入的内存的指针
-*输出：      1 | 0
-*说明：      读取CAN驱动的数据，如果没有数据，返回0
-        将CAN中的数据取出，存入J1939_MESSAGE结构体中
-        默认支持4路CAN硬件的收发。如少于4路，只需配置相应的Can_Node开关代码区，
-        其他（Select_CAN_NODE）保持不变。就直接返回（return 0）
+*���룺     *MsgPtr ����Ҫ������ڴ��ָ��
+*�����      1 | 0
+*˵����      ��ȡCAN���������ݣ����û�����ݣ�����0
+        ��CAN�е�����ȡ��������J1939_MESSAGE�ṹ����
+        Ĭ��֧��4·CANӲ�����շ���������4·��ֻ��������Ӧ��Can_Node���ش�������
+        ������Select_CAN_NODE�����ֲ��䡣��ֱ�ӷ��أ�return 0��
 */
 
 int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
@@ -203,19 +228,19 @@ int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
     {
         case Select_CAN_NODE_1:
         {
-            if ("你的代码") //判断CAN硬件1是否有数据到来
+            if (s_can_rx_ok != false)
             {
-                //你的代码，从CAN硬件1 中将数据读取后，存入 MsgPtr
-                return 1;
+                *MsgPtr     = s_can_rx_buf;
+                s_can_rx_ok = false;
             }
             return 0;
             break;
         }
         case Select_CAN_NODE_2:
         {
-            if ("你的代码") //判断CAN硬件2是否有数据到来
+            if ("��Ĵ���") //�ж�CANӲ��2�Ƿ������ݵ���
             {
-                //你的代码，从CAN硬件2 中将数据读取后，存入 MsgPtr
+                //��Ĵ��룬��CANӲ��2 �н����ݶ�ȡ�󣬴��� MsgPtr
                 return 1;
             }
             return 0;
@@ -223,9 +248,9 @@ int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
         }
         case Select_CAN_NODE_3:
         {
-            if ("你的代码") //判断CAN硬件3是否有数据到来
+            if ("��Ĵ���") //�ж�CANӲ��3�Ƿ������ݵ���
             {
-                //你的代码，从CAN硬件3 中将数据读取后，存入 MsgPtr
+                //��Ĵ��룬��CANӲ��3 �н����ݶ�ȡ�󣬴��� MsgPtr
                 return 1;
             }
             return 0;
@@ -233,9 +258,9 @@ int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
         }
         case Select_CAN_NODE_4:
         {
-            if ("你的代码") //判断CAN硬件4是否有数据到来
+            if ("��Ĵ���") //�ж�CANӲ��4�Ƿ������ݵ���
             {
-                //你的代码，从CAN硬件4 中将数据读取后，存入 MsgPtr
+                //��Ĵ��룬��CANӲ��4 �н����ݶ�ȡ�󣬴��� MsgPtr
                 return 1;
             }
             return 0;
@@ -243,66 +268,66 @@ int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
         }
         default:
         {
-            return 0; //没有消息
+            return 0; //û����Ϣ
             break;
         }
     }
-    return 0; //没有消息
+    return 0; //û����Ϣ
 }
 
-/*不使用中断模式，不对下面的函数进行移植*/
+/*��ʹ���ж�ģʽ����������ĺ���������ֲ*/
 #if J1939_POLL_ECAN == J1939_FALSE
 /*
-*输入：
-*输出：
-*说明：使能接受中断
+*���룺
+*�����
+*˵����ʹ�ܽ����ж�
 */
 void J1939_RXinterruptEnable()
 {
     ;
 }
 /*
-*输入：
-*输出：
-*说明：失能接受中断
+*���룺
+*�����
+*˵����ʧ�ܽ����ж�
 */
 void J1939_RXinterruptDisable()
 {
     ;
 }
 /*
-*输入：
-*输出：
-*说明：使能发送中断
+*���룺
+*�����
+*˵����ʹ�ܷ����ж�
 */
 void J1939_TXinterruptEnable()
 {
     ;
 }
 /*
-*输入：
-*输出：
-*说明：失能发送中断
+*���룺
+*�����
+*˵����ʧ�ܷ����ж�
 */
 void J1939_TXinterruptDisable()
 {
     ;
 }
 /*
-*输入：
-*输出：
-*说明：触发发送中断标致位，当协议栈在中断模式下，要发送消息，将调用此函数
-    CAN驱动函数，就将直接把消息发送出去，不需要协议在调用任何can驱动函数
+*���룺
+*�����
+*˵�������������жϱ���λ����Э��ջ���ж�ģʽ�£�Ҫ������Ϣ�������ô˺���
+    CAN�����������ͽ�ֱ�Ӱ���Ϣ���ͳ�ȥ������ҪЭ���ڵ����κ�can��������
 */
 void J1939_TXinterruptOk()
 {
     ;
 }
 /*
-*输入：
-*输出：
-*说明：清除CAN驱动相关的中断产生标识位，包括（发送中断标志位，接受中断标
-    志位，can总线错误标识位）
+*���룺
+*�����
+*˵�������CAN������ص��жϲ�����ʶλ�������������жϱ�־λ�������жϱ�
+    ־λ��can���ߴ����ʶλ��
 */
 void CAN_identifier_clc()
 {

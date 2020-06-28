@@ -334,4 +334,7 @@ extern void J1939_Request_PGN(j1939_uint32_t pgn, j1939_uint8_t DA, CAN_NODE _Ca
 //创建一个PGN响应
 extern void J1939_Create_Response(j1939_uint8_t data[], j1939_uint16_t dataLenght, j1939_uint32_t PGN, void (*dataUPFun)(), CAN_NODE _Can_Node);
 
+//CAN驱动的接收中断入口
+extern void j1939_can_rx_irq(j1939_uint32_t id, j1939_uint8_t id_typ, j1939_uint8_t len, j1939_uint8_t *dat_p);
+
 #endif //__J1939_H
