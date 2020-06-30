@@ -232,6 +232,7 @@ int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
             {
                 *MsgPtr     = s_can_rx_buf;
                 s_can_rx_ok = false;
+                return 1;
             }
             return 0;
             break;
