@@ -12,9 +12,6 @@
 #include "shell.h"
 #endif
 
-#if USE_J1939_ECU_REQ_ROM == 1
-#endif
-
 /* Constants -----------------------------------------------------------------*/
 /* Define --------------------------------------------------------------------*/
 /* Macro ---------------------------------------------------------------------*/
@@ -273,16 +270,16 @@ static void req_pgn_cbk_49664(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     18      3065                    Comprehensive Component Monitor
     */
 
-    num = j1939_ecu_spn_get_num();
+    num = j1939_ecu_spn_iupr_get_num();
     cnt = 11;
     idx = 0;
     while (num--)
     {
-        *(uint32_t *)&tx_dat_p[cnt] = j1939_ecu_spn_get_iupr(idx, 0);
+        *(uint32_t *)&tx_dat_p[cnt] = j1939_ecu_spn_iupr_get_one(idx, 0);
         cnt += 3;
-        *(uint16_t *)&tx_dat_p[cnt] = j1939_ecu_spn_get_iupr(idx, 1);
+        *(uint16_t *)&tx_dat_p[cnt] = j1939_ecu_spn_iupr_get_one(idx, 1);
         cnt += 2;
-        *(uint16_t *)&tx_dat_p[cnt] = j1939_ecu_spn_get_iupr(idx, 3);
+        *(uint16_t *)&tx_dat_p[cnt] = j1939_ecu_spn_iupr_get_one(idx, 3);
         cnt += 2;
         idx++;
     }
@@ -506,6 +503,7 @@ static void req_pgn_cbk_65203(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
 
 static void req_pgn_cbk_65226(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
 {
+    uint8_t i   = 0;
     uint8_t num = 0;
     memset(tx_dat_p, 0, max_len);
     /*
@@ -611,7 +609,7 @@ static void req_pgn_cbk_65226(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     4～3 位 预留以用来表示 SAE 任务灯状态
     2～1 位 预留以用来表示 SAE 任务灯状态
     */
-    num = j1939_ecu_spn_get_active_dtc_num();
+    num = j1939_ecu_spn_dtc_get_num();
 
     if (num == 0)
     {
@@ -642,7 +640,10 @@ static void req_pgn_cbk_65226(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
              7～1 位 发生次数
     */
 
-    j1939_ecu_spn_get_all_dtc((uint32_t *)&tx_dat_p[2], num);
+    for (i = 0; i < num; i++)
+    {
+        *(uint32_t *)&tx_dat_p[2 + i * 4] = j1939_ecu_spn_dtc_get_one(i);
+    }
 }
 
 static void req_pgn_cbk_65230(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
@@ -801,6 +802,7 @@ static void req_pgn_cbk_65230(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
 
 static void req_pgn_cbk_65236(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
 {
+    uint8_t i   = 0;
     uint8_t num = 0;
     memset(tx_dat_p, 0, max_len);
     /*
@@ -903,7 +905,7 @@ static void req_pgn_cbk_65236(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     4～3 位 预留以用来表示 SAE 任务灯状态
     2～1 位 预留以用来表示 SAE 任务灯状态
     */
-    num = j1939_ecu_spn_get_active_dtc_num();
+    num = j1939_ecu_spn_dtc_get_num();
 
     if (num == 0)
     {
@@ -934,7 +936,10 @@ static void req_pgn_cbk_65236(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
              7～1 位 发生次数
     */
 
-    j1939_ecu_spn_get_all_dtc((uint32_t *)&tx_dat_p[2], num);
+    for (i = 0; i < num; i++)
+    {
+        *(uint32_t *)&tx_dat_p[2 + i * 4] = j1939_ecu_spn_dtc_get_one(i);
+    }
 }
 
 static void req_pgn_cbk_65259(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)

@@ -50,9 +50,10 @@ int main(void)
 
 /* Module switch -------------------------------------------------------------*/
 #if (defined(ECU_SIM_V2))
-#define USE_J1939_ECU_SPN       1 //!< Module Enable
-#define USE_J1939_ECU_SPN_SHELL 1 //!< Function Enable
-#define USE_J1939_ECU_SPN_ROM   1 //!< Function Enable
+#define USE_J1939_ECU_SPN           1 //!< Module Enable
+#define USE_J1939_ECU_SPN_SHELL     1 //!< Function Enable
+#define USE_J1939_ECU_SPN_LOG       1 //!< Function Enable
+#define USE_J1939_ECU_SPN_EASYFLASH 1 //!< Function Enable
 #else
 #define USE_J1939_ECU_SPN 0 //!< Module Enable
 #endif
@@ -78,27 +79,36 @@ int main(void)
 #define KEEP_BITS_8(val) (val & 0xFF)
 
 /* Typedef -------------------------------------------------------------------*/
+/*!
+\brief 参数的状态
+*/
+typedef struct
+{
+    float    val;  //!< 当前值
+    float    min;  //!< 最小值
+    float    max;  //!< 最大值
+    float    step; //!< 步进
+    uint16_t time; //!< 间隔时间
+    uint16_t cnt;  //!< 时间计数
+    bool     dir_up;
+} j1939_spn_ctrl_t;
 
 /* Variables -----------------------------------------------------------------*/
 /* Functions -----------------------------------------------------------------*/
 bool     j1939_ecu_spn_init(void);
-uint32_t j1939_ecu_spn_get_val(uint16_t spn_no);
+bool     j1939_ecu_spn_set_val(uint16_t spn, uint32_t val);
+uint32_t j1939_ecu_spn_get_val(uint16_t spn);
 
-uint8_t  j1939_ecu_spn_get_active_dtc_num(void);
-uint32_t j1939_ecu_spn_get_one_dtc(uint8_t idx);
-uint8_t  j1939_ecu_spn_get_all_dtc(uint32_t* dtc_p, uint8_t max);
-bool     j1939_ecu_spn_set_dtc(uint8_t  idx,
-                               uint32_t spn,
-                               uint8_t  fmi,
-                               uint8_t  oc,
-                               uint8_t  cm);
-uint8_t  j1939_ecu_spn_get_num(void);
-uint32_t j1939_ecu_spn_get_iupr(uint8_t idx, uint8_t typ);
+uint8_t  j1939_ecu_spn_dtc_get_num(void);
+uint32_t j1939_ecu_spn_dtc_get_one(uint8_t idx);
+bool     j1939_ecu_spn_dtc_set_one(uint8_t  idx,
+                                   uint32_t spn,
+                                   uint8_t  fmi,
+                                   uint8_t  oc,
+                                   uint8_t  cm);
 
-#if 0
-float    j1939_ecu_spn_get_val_f(uint16_t off);
-int16_t  j1939_ecu_spn_bin_search(uint16_t spn_no);
-#endif
+uint8_t  j1939_ecu_spn_iupr_get_num(void);
+uint32_t j1939_ecu_spn_iupr_get_one(uint8_t idx, uint8_t typ);
 
 #endif /* end of USE_J1939_ECU_SPN */
 #endif /* end of __J1939_ECU_SPN_H */

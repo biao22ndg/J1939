@@ -13,9 +13,6 @@
 #include "shell.h"
 #endif
 
-#if USE_J1939_ECU_PRD_ROM == 1
-#endif
-
 /* Constants -----------------------------------------------------------------*/
 /* Define --------------------------------------------------------------------*/
 /* Macro ---------------------------------------------------------------------*/
@@ -1205,7 +1202,7 @@ static bool prd_pgn_fun_65226(void)
     uint8_t  oc;
     uint8_t  cm;
 
-    if (j1939_ecu_spn_get_active_dtc_num() == 0)
+    if (j1939_ecu_spn_dtc_get_num() == 0)
     {
         req_pgn_tx_buf[dat_cnt++] = 0;
     }

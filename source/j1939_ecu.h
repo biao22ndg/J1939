@@ -52,7 +52,6 @@ int main(void)
 #if (defined(ECU_SIM_V2))
 #define USE_J1939_ECU       1 //!< Module Enable
 #define USE_J1939_ECU_SHELL 1 //!< Function Enable
-#define USE_J1939_ECU_ROM   1 //!< Function Enable
 #else
 #define USE_J1939_ECU 0 //!< Module Enable
 #endif
@@ -69,9 +68,9 @@ int main(void)
 /* Variables -----------------------------------------------------------------*/
 /* Functions -----------------------------------------------------------------*/
 bool j1939_ecu_init(void);
-void j1939_ecu_task(void);     //!< RTOS task, while(1) inside.
-void j1939_ecu_run(bool stts); //!< false:stop task, true:run task.
-bool j1939_ecu_get_stts(void); //!< false:stop, true:running.
+void j1939_ecu_task(void);    //!< main task, call in while(1).
+void j1939_ecu_run(bool stt); //!< false:stop task, true:run task.
+bool j1939_ecu_get_stt(void); //!< false:stop, true:running.
 
 #else /* else of USE_J1939_ECU*/
 
