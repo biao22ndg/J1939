@@ -42,10 +42,14 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 
-#include "DrvCanPhy.h"
 #include "J1939.H"
+
+#if (defined(ECU_SIM_V2))
+#include "bsp_can.h"
+#endif
 
 extern CAN_NODE Can_Node; //CAN硬件选择
 
@@ -139,7 +143,9 @@ void J1939_CAN_Transmit(J1939_MESSAGE *MsgPtr)
         case Select_CAN_NODE_1:
         {
             id = (MsgPtr->Array[0] << 24) + (MsgPtr->Array[1] << 16) + (MsgPtr->Array[2] << 8) + MsgPtr->Array[3];
-            DrvCanPhy_SendWithExtIdDataAtCan1(MsgPtr->Mxe.Data, id, 8);
+#if (defined(ECU_SIM_V2))
+            bsp_can_send(CAN_A, true, id, 8, MsgPtr->Mxe.Data);
+#endif
             /*加载第一路CAN硬件的29位ID*/
 
             /*CAN硬件加载数据长度*/
@@ -201,14 +207,19 @@ void J1939_CAN_Transmit(J1939_MESSAGE *MsgPtr)
 static volatile J1939_MESSAGE s_can_rx_buf;
 static volatile bool          s_can_rx_ok = false;
 
-void j1939_can_rx_irq(uint32_t id, uint8_t id_typ, uint8_t len, uint8_t *dat_p)
+void j1939_can_rx_irq(uint32_t id, bool is_ext, uint8_t len, uint8_t *dat_p)
 {
+    if (is_ext == false)
+    {
+        return;
+    }
+
     s_can_rx_buf.Array[0]       = id >> (8 * 3);
     s_can_rx_buf.Array[1]       = id >> (8 * 2);
     s_can_rx_buf.Array[2]       = id >> (8 * 1);
     s_can_rx_buf.Array[3]       = id >> (8 * 0);
     s_can_rx_buf.Mxe.DataLength = len;
-    memcpy(s_can_rx_buf.Mxe.Data, dat_p, 8);
+    memcpy((uint8_t *)s_can_rx_buf.Mxe.Data, dat_p, 8);
 
     s_can_rx_ok = true;
 }
@@ -239,7 +250,7 @@ int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
         }
         case Select_CAN_NODE_2:
         {
-            if ("你的代码") //判断CAN硬件2是否有数据到来
+            if (0) //判断CAN硬件2是否有数据到来
             {
                 //你的代码，从CAN硬件2 中将数据读取后，存入 MsgPtr
                 return 1;
@@ -249,7 +260,7 @@ int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
         }
         case Select_CAN_NODE_3:
         {
-            if ("你的代码") //判断CAN硬件3是否有数据到来
+            if (0) //判断CAN硬件3是否有数据到来
             {
                 //你的代码，从CAN硬件3 中将数据读取后，存入 MsgPtr
                 return 1;
@@ -259,7 +270,7 @@ int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
         }
         case Select_CAN_NODE_4:
         {
-            if ("你的代码") //判断CAN硬件4是否有数据到来
+            if (0) //判断CAN硬件4是否有数据到来
             {
                 //你的代码，从CAN硬件4 中将数据读取后，存入 MsgPtr
                 return 1;

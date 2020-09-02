@@ -117,9 +117,10 @@ J1939_TRANSPORT_RX_INFO TP_RX_MSG;
 J1939_TRANSPORT_TX_INFO TP_TX_MSG;
 #endif //J1939_TP_RX_TX
 
+static volatile j1939_req_pgn_cbk_t s_j1939_req_pgn_cbk = NULL;
+
 static void          J1939_ReceiveMessages(void);
 static j1939_uint8_t J1939_TransmitMessages(void);
-
 /**
 * @note  Ó²¼þÂË²¨Æ÷2 »ò Èí¼þÂË²¨Æ÷  ÂË²¨ÅäÖÃ£¨ÉèÖÃPS¶Î£©\n
 */
@@ -1675,6 +1676,17 @@ void J1939_Response(const j1939_uint32_t PGN)
 {
     J1939_MESSAGE _msg;
     j1939_int8_t  ret;
+    uint16_t      tx_len;
+    uint8_t       tx_dat[J1939_REQ_PGN_TX_DAT_MAX_LEN];
+
+    // Yangwb, add callback control.
+    if (s_j1939_req_pgn_cbk != NULL)
+    {
+        if (s_j1939_req_pgn_cbk(PGN, J1939_REQ_PGN_TX_DAT_MAX_LEN, &tx_len, tx_dat) != false)
+        {
+        }
+    }
+    // end of Yangwb code.
 
     /*²éÕÒ¿ÉÓÃµÄÁ´±íÏî*/
     struct Request_List *_requestList = &REQUEST_LIST;
@@ -1869,7 +1881,7 @@ void J1939_Response(const j1939_uint32_t PGN)
         _msg.Mxe.Priority      = J1939_ACK_PRIORITY;
         _msg.Mxe.DataPage      = (((_requestList->PGN) >> 16) & 0x1);
         _msg.Mxe.PDUFormat     = ((_requestList->PGN) >> 8) & 0xFF;
-        _msg.Mxe.PDUSpecific   = (INT8U)(_requestList->PGN);
+        _msg.Mxe.PDUSpecific   = (uint8_t)(_requestList->PGN);
         _msg.Mxe.SourceAddress = J1939_Address;
 #endif
         _msg.Mxe.DataLength = _requestList->lenght;
@@ -1887,4 +1899,18 @@ void J1939_Response(const j1939_uint32_t PGN)
         SendOneMessage((J1939_MESSAGE *)&_msg);
     }
 }
+
+bool j1939_reg_req_pgn_cbk(j1939_req_pgn_cbk_t cbk)
+{
+    if (s_j1939_req_pgn_cbk == NULL)
+    {
+        s_j1939_req_pgn_cbk = cbk;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 #endif

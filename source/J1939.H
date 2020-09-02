@@ -38,6 +38,14 @@
  **********************************************************************/
 #ifndef __J1939_H
 #define __J1939_H
+
+#include <stdbool.h>
+#include <stdint.h>
+
+#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+#include "cmsis_armclang.h"
+#endif
+
 /******************************类型声明*********************************/
 #define FALSE 0
 #define TRUE  1
@@ -264,16 +272,17 @@ struct Request_List
 #define J1939_MSG_LENGTH  9 //消息长度
 #define J1939_DATA_LENGTH 8 //数据长度
 
+#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+//__PACKED_UNION
+#else
 #pragma anon_unions // Yangwb:keil默认不支持匿名结构体，需要编译指令#pragma anon_unions。
+#endif
+
 /** J1939_MESSAGE_UNION 结构体
 * 实现了J1939消息对象
 *
 *
 */
-union J1939_MESSAGE_UNION {
-    /** j1939 的 ID 组成结构体
-    *
-    */
     struct j1939_PID
     {
         j1939_uint8_t  DataPage : 1;            /**< 数据页*/
@@ -289,6 +298,10 @@ union J1939_MESSAGE_UNION {
         j1939_uint32_t PGN : 24;                /**< 参数群编号*/
         j1939_uint32_t ReservePGN : 8;          /**< 空闲*/
     };
+__PACKED_UNION J1939_MESSAGE_UNION {
+    /** j1939 的 ID 组成结构体
+    *
+    */
     struct j1939_PID Mxe;                                         /**< j1939 的 ID 组成结构体*/
     j1939_uint8_t    Array[J1939_MSG_LENGTH + J1939_DATA_LENGTH]; /**< 联合体数组，方便快速处理结构体赋值*/
 };
@@ -313,6 +326,9 @@ union J1939_FLAGS_UNION {
 
 typedef union J1939_FLAGS_UNION J1939_FLAG;
 
+#define J1939_REQ_PGN_TX_DAT_MAX_LEN 200
+typedef bool (*j1939_req_pgn_cbk_t)(uint16_t pgn, uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p);
+
 /********************************************API**************************************************************/
 
 //初始化函数
@@ -334,7 +350,9 @@ extern void J1939_Request_PGN(j1939_uint32_t pgn, j1939_uint8_t DA, CAN_NODE _Ca
 //创建一个PGN响应
 extern void J1939_Create_Response(j1939_uint8_t data[], j1939_uint16_t dataLenght, j1939_uint32_t PGN, void (*dataUPFun)(), CAN_NODE _Can_Node);
 
+//注册请求PGN的回调函数
+extern bool j1939_reg_req_pgn_cbk(j1939_req_pgn_cbk_t cbk);
 //CAN驱动的接收中断入口
-extern void j1939_can_rx_irq(j1939_uint32_t id, j1939_uint8_t id_typ, j1939_uint8_t len, j1939_uint8_t *dat_p);
+extern void j1939_can_rx_irq(j1939_uint32_t id, bool id_typ, j1939_uint8_t len, j1939_uint8_t *dat_p);
 
 #endif //__J1939_H
