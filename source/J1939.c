@@ -546,8 +546,8 @@ void J1939_ISR(void)
         如果使用中断模式，本程序将不会处理接受和发送消息，只处理地址竞争超时。\n
 */
 //声明TP轮询函数
-void J1939_TP_Poll();
-void J1939_Poll()
+void J1939_TP_Poll(void);
+void J1939_Poll(void)
 {
     //我们必须调用J1939_ReceiveMessages接受函数，在时间被重置为0之前。
 #if J1939_POLL_ECAN == J1939_TRUE
@@ -704,7 +704,6 @@ void J1939_ReceiveMessages(void)
                         break;
                     }
                     goto PutInReceiveQueue;
-                    break;
                 }
                 if (J1939_TP_Flags_t.state == J1939_TP_TX)
                 {
@@ -759,7 +758,6 @@ void J1939_ReceiveMessages(void)
                     }
                 }
                 goto PutInReceiveQueue;
-                break;
 #endif //J1939_TP_RX_TX
 
 #if J1939_TP_RX_TX
@@ -1103,7 +1101,6 @@ static j1939_uint8_t J1939_TransmitMessages()
         default:
         {
             return RC_CANNOTTRANSMIT;
-            break;
         }
     }
 

@@ -276,6 +276,7 @@ struct Request_List
 //__PACKED_UNION
 #else
 #pragma anon_unions // Yangwb:keil默认不支持匿名结构体，需要编译指令#pragma anon_unions。
+#define __PACKED_UNION union
 #endif
 
 /** J1939_MESSAGE_UNION 结构体
@@ -332,11 +333,11 @@ typedef bool (*j1939_req_pgn_cbk_t)(uint16_t pgn, uint16_t max_len, uint16_t *tx
 /********************************************API**************************************************************/
 
 //初始化函数
-extern void J1939_Initialization();
+extern void J1939_Initialization(void);
 //CAN驱动收发中断入口
-extern void J1939_ISR();
+extern void J1939_ISR(void);
 //心跳函数,定时被调用
-extern void J1939_Poll();
+extern void J1939_Poll(void);
 //读取单帧消息
 extern j1939_uint8_t J1939_Read_Message(J1939_MESSAGE *MsgPtr, CAN_NODE _Can_Node);
 //发送单帧消息

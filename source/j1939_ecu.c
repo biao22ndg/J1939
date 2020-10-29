@@ -17,31 +17,15 @@
 /* Define --------------------------------------------------------------------*/
 /* Macro ---------------------------------------------------------------------*/
 /* Typedef -------------------------------------------------------------------*/
-typedef struct
-{
-    bool init;
-    bool run;
-} j1939_ecu_stt_t;
-
 /* Variables -----------------------------------------------------------------*/
-static volatile j1939_ecu_stt_t s_j1939_ecu_stt = {0};
 
 /* Function prototypes -------------------------------------------------------*/
 /* Functions -----------------------------------------------------------------*/
-void j1939_ecu_run(bool stt)
-{
-    s_j1939_ecu_stt.run = stt;
-}
-#if USE_J1939_ECU_SHELL == 1
-SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0) | SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), /* 属性 */
-                 j1939run,                                                      /* 命令名 */
-                 j1939_ecu_run,                                                 /* 函数 */
-                 "j1939run 1:启动J1939模拟任务");                               /* 描述 */
-#endif
-
 bool j1939_ecu_init(void)
 {
-    if (s_j1939_ecu_stt.init != false)
+    static bool s_init = false;
+
+    if (s_init != false)
     {
         return true;
     }
@@ -60,16 +44,8 @@ bool j1939_ecu_init(void)
 
 void j1939_ecu_task(void)
 {
-    if (s_j1939_ecu_stt.run != false)
-    {
-        J1939_Poll();
-        j1939_ecu_pgn_prd_task();
-    }
-}
-
-bool j1939_ecu_get_stt(void)
-{
-    return s_j1939_ecu_stt.run;
+    J1939_Poll();
+    j1939_ecu_pgn_prd_task();
 }
 
 #endif /* end of USE_J1939_ECU */

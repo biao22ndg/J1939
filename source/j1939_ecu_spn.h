@@ -50,10 +50,10 @@ int main(void)
 
 /* Module switch -------------------------------------------------------------*/
 #if (defined(ECU_SIM_V2))
-#define USE_J1939_ECU_SPN           1 //!< Module Enable
-#define USE_J1939_ECU_SPN_SHELL     1 //!< Function Enable
-#define USE_J1939_ECU_SPN_LOG       1 //!< Function Enable
-#define USE_J1939_ECU_SPN_EASYFLASH 1 //!< Function Enable
+#define USE_J1939_ECU_SPN       1 //!< Module Enable
+#define USE_J1939_ECU_SPN_SHELL 1 //!< Function Enable
+#define USE_J1939_ECU_SPN_LOG   1 //!< Function Enable
+#define USE_J1939_ECU_SPN_KNOB  1 //!< Function Enable
 #else
 #define USE_J1939_ECU_SPN 0 //!< Module Enable
 #endif
@@ -98,6 +98,12 @@ typedef struct
 bool     j1939_ecu_spn_init(void);
 bool     j1939_ecu_spn_set_val(uint16_t spn, uint32_t val);
 uint32_t j1939_ecu_spn_get_val(uint16_t spn);
+uint32_t j1939_ecu_spn_get_val_to_obd(uint16_t spn);
+
+bool     j1939_ecu_spn_set(uint16_t idx, j1939_spn_ctrl_t* dat_p);
+bool     j1939_ecu_spn_get(uint16_t idx, j1939_spn_ctrl_t* dat_p);
+uint16_t j1939_ecu_spn_get_no(uint16_t idx);
+uint16_t j1939_ecu_spn_get_num(void);
 
 uint8_t  j1939_ecu_spn_dtc_get_num(void);
 uint32_t j1939_ecu_spn_dtc_get_one(uint8_t idx);

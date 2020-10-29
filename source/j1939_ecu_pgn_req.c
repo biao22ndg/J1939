@@ -34,6 +34,8 @@ static void req_pgn_cbk_65257(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
 static void req_pgn_cbk_49408(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p);
 static void req_pgn_cbk_49664(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p);
 static void req_pgn_cbk_54016(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p);
+static void req_pgn_cbk_64822(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p);
+static void req_pgn_cbk_64823(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p);
 static void req_pgn_cbk_64981(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p);
 static void req_pgn_cbk_65168(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p);
 static void req_pgn_cbk_65203(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p);
@@ -51,6 +53,8 @@ static j1939_pgn_req_t s_pgn_req_l[] = {
     {49408, req_pgn_cbk_49408, true},
     {49664, req_pgn_cbk_49664, true},
     {54016, req_pgn_cbk_54016, true},
+    {64822, req_pgn_cbk_64822, true},
+    {64823, req_pgn_cbk_64823, true},
     {64981, req_pgn_cbk_64981, true},
     {65168, req_pgn_cbk_65168, true},
     {65203, req_pgn_cbk_65203, true},
@@ -85,8 +89,8 @@ static void req_pgn_cbk_65257(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     1-4 4 bytes Engine Trip Fuel 182 
     5-8 4 bytes Engine Total Fuel Used 250 
     */
-    *(uint32_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val(182);
-    *(uint32_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val(250);
+    *(uint32_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val_to_obd(182);
+    *(uint32_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val_to_obd(250);
 }
 
 static void req_pgn_cbk_49408(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
@@ -117,7 +121,7 @@ static void req_pgn_cbk_49408(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     Suspect Parameter Number: 3069
     Reference: 5.7.5
     */
-    *(uint16_t *)(&tx_dat_p[0]) = j1939_ecu_spn_get_val(3069);
+    *(uint16_t *)(&tx_dat_p[0]) = j1939_ecu_spn_get_val_to_obd(3069);
 }
 
 static void req_pgn_cbk_49664(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
@@ -175,7 +179,7 @@ static void req_pgn_cbk_49664(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     Suspect Parameter Number: 3048
     Reference: 5.7.20
     */
-    *(uint16_t *)(&tx_dat_p[0]) = j1939_ecu_spn_get_val(3048);
+    *(uint16_t *)(&tx_dat_p[0]) = j1939_ecu_spn_get_val_to_obd(3048);
 
     /*
     Bytes 3-4 OBD Monitoring Conditions Encountered See 5.7.20.2
@@ -191,7 +195,7 @@ static void req_pgn_cbk_49664(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     Suspect Parameter Number: 3049
     Reference: 5.7.20
     */
-    *(uint16_t *)(&tx_dat_p[2]) = j1939_ecu_spn_get_val(3049);
+    *(uint16_t *)(&tx_dat_p[2]) = j1939_ecu_spn_get_val_to_obd(3049);
 
     /*
     Bytes 5-7 SPN of Applicable System Monitor See 5.7.20.3
@@ -207,7 +211,7 @@ static void req_pgn_cbk_49664(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     Suspect Parameter Number: 3066
     Reference: 5.7.20
     */
-    *(uint32_t *)(&tx_dat_p[4]) = j1939_ecu_spn_get_val(3066) & 0xFFFFFF;
+    *(uint32_t *)(&tx_dat_p[4]) = j1939_ecu_spn_get_val_to_obd(3066) & 0xFFFFFF;
 
     /*
     Bytes 8-9 Applicable System Monitor Numerator See 5.7.20.4
@@ -223,7 +227,7 @@ static void req_pgn_cbk_49664(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     Suspect Parameter Number: 3067
     Reference: 5.7.20
     */
-    *(uint16_t *)(&tx_dat_p[7]) = j1939_ecu_spn_get_val(3067);
+    *(uint16_t *)(&tx_dat_p[7]) = j1939_ecu_spn_get_val_to_obd(3067);
 
     /*
     Bytes 10-11 Applicable System Monitor Denominator See 5.7.20.5
@@ -239,7 +243,7 @@ static void req_pgn_cbk_49664(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     Suspect Parameter Number: 3068
     Reference: 5.7.20
     */
-    *(uint16_t *)(&tx_dat_p[9]) = j1939_ecu_spn_get_val(3068);
+    *(uint16_t *)(&tx_dat_p[9]) = j1939_ecu_spn_get_val_to_obd(3068);
 
     /*
     Byte n to z
@@ -326,7 +330,7 @@ static void req_pgn_cbk_54016(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     Suspect Parameter Number: 1634
     Reference: 5.7.19
     */
-    *(uint32_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val(1634);
+    *(uint32_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val_to_obd(1634);
 
     /*
     5.7.19.2 Calibration Identification—Sixteen-byte calibration identification number. Uniquely identifies the software
@@ -343,7 +347,7 @@ static void req_pgn_cbk_54016(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     Suspect Parameter Number: 1635
     Reference: 5.7.19   
     */
-    memcpy(&tx_dat_p[4], (char *)j1939_ecu_spn_get_val(1635), 16);
+    memcpy(&tx_dat_p[4], (char *)j1939_ecu_spn_get_val_to_obd(1635), 16);
 }
 
 static void req_pgn_cbk_64981(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
@@ -386,19 +390,19 @@ static void req_pgn_cbk_64981(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     3-4 2 字节 估算涡轮增压器涡轮出气口温度 2790
     5-6 2 字节 废气再循环（EGR）阀控制 2791
     */
-    *(uint16_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val(2789);
-    *(uint16_t *)(&tx_dat_p[2]) |= j1939_ecu_spn_get_val(2790);
-    *(uint16_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val(2791);
+    *(uint16_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val_to_obd(2789);
+    *(uint16_t *)(&tx_dat_p[2]) |= j1939_ecu_spn_get_val_to_obd(2790);
+    *(uint16_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val_to_obd(2791);
 
     /*
     7.1 2 位 可变几何涡轮增压器（VGT）气体控制关闭阀 2792
     */
-    *(uint16_t *)(&tx_dat_p[6]) |= KEEP_BITS_2(j1939_ecu_spn_get_val(2792)) << 0;
+    *(uint16_t *)(&tx_dat_p[6]) |= KEEP_BITS_2(j1939_ecu_spn_get_val_to_obd(2792)) << 0;
 
     /*
     8 1 字节 VGT1 致动位置 2795
     */
-    tx_dat_p[7] |= j1939_ecu_spn_get_val(2795);
+    tx_dat_p[7] |= j1939_ecu_spn_get_val_to_obd(2795);
 }
 static void req_pgn_cbk_65168(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
 {
@@ -424,37 +428,37 @@ static void req_pgn_cbk_65168(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     /*
     01 1 byte Number of Engine Torque History Records 1246 
     */
-    tx_dat_p[0] |= j1939_ecu_spn_get_val(1246);
+    tx_dat_p[0] |= j1939_ecu_spn_get_val_to_obd(1246);
 
     /*
     02-03 2 bytes Engine Power 1247 
     04-05 2 bytes Engine Peak Torque 1 1248 
     06-07 2 bytes Engine Peak Torque 2 1249 
     */
-    *(uint16_t *)(&tx_dat_p[1]) |= j1939_ecu_spn_get_val(1247);
-    *(uint16_t *)(&tx_dat_p[3]) |= j1939_ecu_spn_get_val(1248);
-    *(uint16_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val(1249);
+    *(uint16_t *)(&tx_dat_p[1]) |= j1939_ecu_spn_get_val_to_obd(1247);
+    *(uint16_t *)(&tx_dat_p[3]) |= j1939_ecu_spn_get_val_to_obd(1248);
+    *(uint16_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val_to_obd(1249);
 
     /*
     08 1 byte Calibration Record Start Month 1250 
     09 1 byte Calibration Record Start Day 1251 
     10 1 byte Calibration Record Start Year 1252 
     */
-    tx_dat_p[7] |= j1939_ecu_spn_get_val(1250);
-    tx_dat_p[8] |= j1939_ecu_spn_get_val(1251);
-    tx_dat_p[9] |= j1939_ecu_spn_get_val(1252);
+    tx_dat_p[7] |= j1939_ecu_spn_get_val_to_obd(1250);
+    tx_dat_p[8] |= j1939_ecu_spn_get_val_to_obd(1251);
+    tx_dat_p[9] |= j1939_ecu_spn_get_val_to_obd(1252);
 
     /*
     11-14 4 bytes Calibration Record Duration Time 1253 
     */
-    *(uint32_t *)(&tx_dat_p[10]) |= j1939_ecu_spn_get_val(1253);
+    *(uint32_t *)(&tx_dat_p[10]) |= j1939_ecu_spn_get_val_to_obd(1253);
 
     /*
     15.1 2 bits Torque Limiting Feature Status 1254 
     15.3 3 bits Engine Torque Limit Feature 1632 
     */
-    tx_dat_p[14] |= KEEP_BITS_2(j1939_ecu_spn_get_val(1254)) << 0;
-    tx_dat_p[14] |= KEEP_BITS_3(j1939_ecu_spn_get_val(1632)) << 2;
+    tx_dat_p[14] |= KEEP_BITS_2(j1939_ecu_spn_get_val_to_obd(1254)) << 0;
+    tx_dat_p[14] |= KEEP_BITS_3(j1939_ecu_spn_get_val_to_obd(1632)) << 2;
 
     /*
     16-17 2 bytes Transmission Gear Ratio 1 1255 
@@ -467,15 +471,15 @@ static void req_pgn_cbk_65168(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     30-31 2 bytes Engine Torque Limit 5, Switch 1262 
     32-33 2 bytes Engine Torque Limit 6, Axle Input 1263 
     */
-    *(uint16_t *)(&tx_dat_p[15]) |= j1939_ecu_spn_get_val(1255);
-    *(uint16_t *)(&tx_dat_p[17]) |= j1939_ecu_spn_get_val(1256);
-    *(uint16_t *)(&tx_dat_p[19]) |= j1939_ecu_spn_get_val(1257);
-    *(uint16_t *)(&tx_dat_p[21]) |= j1939_ecu_spn_get_val(1258);
-    *(uint16_t *)(&tx_dat_p[23]) |= j1939_ecu_spn_get_val(1259);
-    *(uint16_t *)(&tx_dat_p[25]) |= j1939_ecu_spn_get_val(1260);
-    *(uint16_t *)(&tx_dat_p[27]) |= j1939_ecu_spn_get_val(1261);
-    *(uint16_t *)(&tx_dat_p[29]) |= j1939_ecu_spn_get_val(1262);
-    *(uint16_t *)(&tx_dat_p[31]) |= j1939_ecu_spn_get_val(1263);
+    *(uint16_t *)(&tx_dat_p[15]) |= j1939_ecu_spn_get_val_to_obd(1255);
+    *(uint16_t *)(&tx_dat_p[17]) |= j1939_ecu_spn_get_val_to_obd(1256);
+    *(uint16_t *)(&tx_dat_p[19]) |= j1939_ecu_spn_get_val_to_obd(1257);
+    *(uint16_t *)(&tx_dat_p[21]) |= j1939_ecu_spn_get_val_to_obd(1258);
+    *(uint16_t *)(&tx_dat_p[23]) |= j1939_ecu_spn_get_val_to_obd(1259);
+    *(uint16_t *)(&tx_dat_p[25]) |= j1939_ecu_spn_get_val_to_obd(1260);
+    *(uint16_t *)(&tx_dat_p[27]) |= j1939_ecu_spn_get_val_to_obd(1261);
+    *(uint16_t *)(&tx_dat_p[29]) |= j1939_ecu_spn_get_val_to_obd(1262);
+    *(uint16_t *)(&tx_dat_p[31]) |= j1939_ecu_spn_get_val_to_obd(1263);
 }
 
 static void req_pgn_cbk_65203(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
@@ -496,9 +500,9 @@ static void req_pgn_cbk_65203(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     5-6 2 bytes Trip Average Fuel Rate 1029 
     7-8 2 bytes Flexible Fuel Percentage 5458 
     */
-    *(uint32_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val(1028);
-    *(uint16_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val(1029);
-    *(uint16_t *)(&tx_dat_p[6]) |= j1939_ecu_spn_get_val(5458);
+    *(uint32_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val_to_obd(1028);
+    *(uint16_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val_to_obd(1029);
+    *(uint16_t *)(&tx_dat_p[6]) |= j1939_ecu_spn_get_val_to_obd(5458);
 }
 
 static void req_pgn_cbk_65226(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
@@ -591,10 +595,10 @@ static void req_pgn_cbk_65226(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     Suspect Parameter Number: 987
     Reference: 5.7.1, 5.7.2, 5.7.6 and 5.7.12
     */
-    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val(1213)) << 0;
-    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val(623)) << 2;
-    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val(624)) << 4;
-    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val(987)) << 6;
+    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val_to_obd(1213)) << 0;
+    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val_to_obd(623)) << 2;
+    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val_to_obd(624)) << 4;
+    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val_to_obd(987)) << 6;
 
     /*
     Byte: 2 
@@ -730,10 +734,10 @@ static void req_pgn_cbk_65230(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     NOTE—Notice that a bit set to zero can mean test not supported. This is different than the typical J1939
     use of the value 1 to indicate not available.
     */
-    tx_dat_p[0] |= j1939_ecu_spn_get_val(1218);
-    tx_dat_p[1] |= j1939_ecu_spn_get_val(1219);
-    tx_dat_p[2] |= j1939_ecu_spn_get_val(1220);
-    tx_dat_p[3] |= j1939_ecu_spn_get_val(1221);
+    tx_dat_p[0] |= j1939_ecu_spn_get_val_to_obd(1218);
+    tx_dat_p[1] |= j1939_ecu_spn_get_val_to_obd(1219);
+    tx_dat_p[2] |= j1939_ecu_spn_get_val_to_obd(1220);
+    tx_dat_p[3] |= j1939_ecu_spn_get_val_to_obd(1221);
 
     /*
     5-6 Non-continuously Monitored Systems Support See 5.7.5.5
@@ -796,8 +800,8 @@ static void req_pgn_cbk_65230(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     format). Also notice that a bit set to zero can mean  test not supported. This is different than the typical
     J1939 use of the value 1 to indicate not available.
     */
-    *(uint16_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val(1222);
-    *(uint16_t *)(&tx_dat_p[6]) |= j1939_ecu_spn_get_val(1223);
+    *(uint16_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val_to_obd(1222);
+    *(uint16_t *)(&tx_dat_p[6]) |= j1939_ecu_spn_get_val_to_obd(1223);
 }
 
 static void req_pgn_cbk_65236(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
@@ -887,10 +891,10 @@ static void req_pgn_cbk_65236(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     Suspect Parameter Number: 987
     Reference: 5.7.1, 5.7.2, 5.7.6 and 5.7.12
     */
-    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val(1213)) << 0;
-    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val(623)) << 2;
-    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val(624)) << 4;
-    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val(987)) << 6;
+    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val_to_obd(1213)) << 0;
+    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val_to_obd(623)) << 2;
+    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val_to_obd(624)) << 4;
+    tx_dat_p[0] |= KEEP_BITS_2(j1939_ecu_spn_get_val_to_obd(987)) << 6;
 
     /*
     Byte: 2 
@@ -1023,28 +1027,28 @@ static void req_pgn_cbk_65259(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     cnt = 0;
 
     /* Make 586 */
-    str = (char *)j1939_ecu_spn_get_val(586);
+    str = (char *)j1939_ecu_spn_get_val_to_obd(586);
     num = strlen(str);
     memcpy(&tx_dat_p[cnt], str, num);
     cnt += num;
     tx_dat_p[cnt++] = '*';
 
     /* Model 587 */
-    str = (char *)j1939_ecu_spn_get_val(587);
+    str = (char *)j1939_ecu_spn_get_val_to_obd(587);
     num = strlen(str);
     memcpy(&tx_dat_p[cnt], str, num);
     cnt += num;
     tx_dat_p[cnt++] = '*';
 
     /* Serial Number 588 */
-    str = (char *)j1939_ecu_spn_get_val(588);
+    str = (char *)j1939_ecu_spn_get_val_to_obd(588);
     num = strlen(str);
     memcpy(&tx_dat_p[cnt], str, num);
     cnt += num;
     tx_dat_p[cnt++] = '*';
 
     /* Unit Number (Power Unit) 233 */
-    str = (char *)j1939_ecu_spn_get_val(233);
+    str = (char *)j1939_ecu_spn_get_val_to_obd(233);
     num = strlen(str);
     memcpy(&tx_dat_p[cnt], str, num);
 }
@@ -1071,7 +1075,7 @@ static void req_pgn_cbk_65260(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     delimiter 
     Vehicle Identification Number 237 
     */
-    memcpy(tx_dat_p, (char *)j1939_ecu_spn_get_val(237), 17);
+    memcpy(tx_dat_p, (char *)j1939_ecu_spn_get_val_to_obd(237), 17);
 }
 
 static void req_pgn_cbk_65420(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
@@ -1174,8 +1178,65 @@ static void req_pgn_cbk_65253(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_da
     1-4 4 bytes Engine Total Hours of Operation 247 
     5-8 4 bytes Engine Total Revolutions 249 
     */
-    *(uint32_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val(247);
-    *(uint32_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val(249);
+    *(uint32_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val_to_obd(247);
+    *(uint32_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val_to_obd(249);
+}
+
+static void req_pgn_cbk_64822(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
+{
+    memset(tx_dat_p, 0, max_len);
+
+    /*
+    PGN 64822 Aftertreatment 2 Diesel Exhaust Fluid Information A2DEFI 
+    Sensor Information which measures temperature, concentration, and conductivity of the diesel exhaust fluid of the 
+    aftertreatment 2 system. 
+    Transmission Repetition Rate: 1 s 
+    Data Length: 8 
+    Extended Data Page: 0 
+    Data Page: 0 
+    PDU Format: 253 
+    PDU Specific: 54 PGN Supporting Information:  
+    Default Priority: 6 
+    Parameter Group Number: 64822  (0x00FD36) 
+    Start Position Length Parameter Name SPN 
+    1 1 byte Aftertreatment 2 Diesel Exhaust Fluid Temperature 2 4420 
+    2 1 byte Aftertreatment 2 Diesel Exhaust Fluid Concentration 4421 
+    3 1 byte Aftertreatment 2 Diesel Exhaust Fluid Conductivity 4422 
+    4.1 5 bits Aftertreatment 2 Diesel Exhaust Fluid Temperature 2 Preliminary FMI 4423 
+    5.1 5 bits Aftertreatment 2 Diesel Exhaust Fluid Properties Preliminary FMI 4424 
+    6.1 4 bits Aftertreatment 2 Diesel Exhaust Fluid Type 4425 
+     */
+    *(uint8_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val_to_obd(4420);
+    *(uint8_t *)(&tx_dat_p[1]) |= j1939_ecu_spn_get_val_to_obd(4421);
+    *(uint8_t *)(&tx_dat_p[2]) |= j1939_ecu_spn_get_val_to_obd(4422);
+    *(uint8_t *)(&tx_dat_p[3]) |= j1939_ecu_spn_get_val_to_obd(4423);
+    *(uint8_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val_to_obd(4424);
+    *(uint8_t *)(&tx_dat_p[5]) |= j1939_ecu_spn_get_val_to_obd(4425);
+}
+
+static void req_pgn_cbk_64823(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)
+{
+    memset(tx_dat_p, 0, max_len);
+
+    /*
+    PGN 64823 Aftertreatment 2 SCR Service Information A2SCRSI 
+    This message contains SCR service information for aftertreatment system 2 (or bank 2). 
+    Transmission Repetition Rate: On request 
+    Data Length: 8 
+    Extended Data Page: 0 
+    Data Page: 0 
+    PDU Format: 253 
+    PDU Specific: 55 PGN Supporting Information:  
+    Default Priority: 8 
+    Parameter Group Number: 64823  (0x00FD37) 
+    Start Position Length Parameter Name SPN 
+    1-2 2 bytes Aftertreatment 2 Diesel Exhaust Fluid Average Consumption 4417 
+    3-4 2 bytes Aftertreatment 2 SCR Commanded Catalyst Diesel Exhaust Fluid Consumption 4418 
+    5 1 byte Aftertreatment 2 SCR Conversion Efficiency 4419 
+      */
+    *(uint16_t *)(&tx_dat_p[0]) |= j1939_ecu_spn_get_val_to_obd(4417);
+    *(uint16_t *)(&tx_dat_p[2]) |= j1939_ecu_spn_get_val_to_obd(4418);
+    *(uint8_t *)(&tx_dat_p[4]) |= j1939_ecu_spn_get_val_to_obd(4419);
 }
 
 static void req_pgn_cbk_65518(uint16_t max_len, uint16_t *tx_len, uint8_t *tx_dat_p)

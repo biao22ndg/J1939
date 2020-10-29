@@ -225,9 +225,9 @@ void j1939_can_rx_irq(uint32_t id, bool is_ext, uint8_t len, uint8_t *dat_p)
 }
 
 /*
-*输入：     *MsgPtr 数据要存入的内存的指针
-*输出：      1 | 0
-*说明：      读取CAN驱动的数据，如果没有数据，返回0
+*输入： *MsgPtr 数据要存入的内存的指针
+*输出： 1 | 0
+*说明： 读取CAN驱动的数据，如果没有数据，返回0
         将CAN中的数据取出，存入J1939_MESSAGE结构体中
         默认支持4路CAN硬件的收发。如少于4路，只需配置相应的Can_Node开关代码区，
         其他（Select_CAN_NODE）保持不变。就直接返回（return 0）
@@ -235,56 +235,46 @@ void j1939_can_rx_irq(uint32_t id, bool is_ext, uint8_t len, uint8_t *dat_p)
 
 int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
 {
+    int ret = 0; //没有消息
     switch (Can_Node)
     {
         case Select_CAN_NODE_1:
-        {
             if (s_can_rx_ok != false)
             {
                 *MsgPtr     = s_can_rx_buf;
                 s_can_rx_ok = false;
-                return 1;
+                ret         = 1;
             }
-            return 0;
             break;
-        }
+
         case Select_CAN_NODE_2:
-        {
             if (0) //判断CAN硬件2是否有数据到来
             {
                 //你的代码，从CAN硬件2 中将数据读取后，存入 MsgPtr
-                return 1;
+                ret = 1;
             }
-            return 0;
             break;
-        }
+
         case Select_CAN_NODE_3:
-        {
             if (0) //判断CAN硬件3是否有数据到来
             {
                 //你的代码，从CAN硬件3 中将数据读取后，存入 MsgPtr
-                return 1;
+                ret = 1;
             }
-            return 0;
             break;
-        }
+
         case Select_CAN_NODE_4:
-        {
             if (0) //判断CAN硬件4是否有数据到来
             {
                 //你的代码，从CAN硬件4 中将数据读取后，存入 MsgPtr
-                return 1;
-            }
-            return 0;
+                ret = 1;
+            }            ret = 0;
             break;
-        }
+
         default:
-        {
-            return 0; //没有消息
             break;
-        }
     }
-    return 0; //没有消息
+    return ret;
 }
 
 /*不使用中断模式，不对下面的函数进行移植*/
